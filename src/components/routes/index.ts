@@ -1,4 +1,4 @@
-import AuthRoutes from "./authRoutes";
-import RootRoutes from "./rootRoutes";
+import AuthRoutes from "./AuthRoutes";
+import RootRoutes from "./RootRoutes";
 
 export {AuthRoutes, RootRoutes}
