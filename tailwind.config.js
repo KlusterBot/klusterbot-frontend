@@ -3,6 +3,9 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        body: `'Noto Sans', sans-serif`,
+      },
       backgroundColor: {
         "primary-dark-blue": "#153ABA",
         "primary-light-blue": "#C4E0FD",
