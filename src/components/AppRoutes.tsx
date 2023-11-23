@@ -7,8 +7,6 @@ import { AuthenticateUser, AuthorizeUser } from "./auth";
 const AppRoutes = () => {
   // const token = null;
   const routes = useRoutes([
-    // { path: "/test", element: <Test /> },
-
     {
       element: <AuthLayout />,
       children: [
