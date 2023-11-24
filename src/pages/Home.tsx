@@ -6,10 +6,10 @@ import faqChat2 from "../assets/chat-2.png";
 import carouseItem1 from "../assets/carousel-item-1.png";
 import carouseItem2 from "../assets/carousel-item-2.png";
 import carouseItem3 from "../assets/carousel-item-3.png";
-import GetStartedButton from "../components/GetStartedButton";
+import clsx from "clsx";
+import Button from "../UI/Button";
 import Container from "../components/Container";
 import Carousel from "../components/Carousel";
-import clsx from "clsx";
 
 const Home = () => {
   const h2Classes = "font-bold text-[2.4rem] text-darker-color";
@@ -21,7 +21,10 @@ const Home = () => {
 
       {/* SOLVE.... */}
       <Container>
-        <div className="flex gap-8 items-center justify-between pt-32 pb-16">
+        <div
+          className="flex gap-8 items-center justify-between pt-32 pb-16"
+          id="about-us"
+        >
           <div className="flex flex-col gap-8 w-[55%]">
             <h2 className={clsx(`${h2Classes}`)}>
               Solve customer problems instantly using AI
@@ -45,7 +48,7 @@ const Home = () => {
                 </p>
               </div>
             </div>
-            <GetStartedButton bordered />
+            <Button buttonText="Get Started" bordered />
           </div>
           <img src={chat} alt="" />
         </div>
@@ -61,7 +64,10 @@ const Home = () => {
 
       {/* INTERACT .... */}
       <Container>
-        <div className="flex gap-8 py-32 items-center justify-between">
+        <div
+          className="flex gap-8 py-32 items-center justify-between"
+          id="services"
+        >
           <div className="w-[45%]">
             <h2 className={clsx(`${h2Classes} mb-8`)}>
               Interact with visitors on your website through live chat
@@ -96,7 +102,7 @@ const Home = () => {
               Most frequently asked questions by visitors are well attended to
               by our chatbots, so you can focus on more productive task.
             </p>
-            <GetStartedButton bordered className="mt-8" />
+            <Button buttonText="Get Started" bordered className="mt-8" />
           </div>
         </div>
         <div className="flex items-center flex-row-reverse justify-between gap-8">
@@ -110,7 +116,7 @@ const Home = () => {
               with Kluster AI. Collaborate with our effective AI to automate
               your business.
             </p>
-            <GetStartedButton bordered className="mt-8" />
+            <Button buttonText="Get Started" bordered className="mt-8" icon />
           </div>
         </div>
       </Container>

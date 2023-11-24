@@ -13,12 +13,16 @@ const PointerImage = ({ className }: { className?: string }) => {
         <PointerBgRoundedCard />
       </div>
       <div className="relative z-[2]">
-        <img src={updates} alt="" className="absolute bottom-0 left-[-4rem]" />
+        <img
+          src={updates}
+          alt=""
+          className="absolute bottom-0 left-[-15%] w-[40%]"
+        />
         <img src={guy} alt="" />
         <img
           src={users}
           alt=""
-          className="absolute top-[7rem] right-[-2rem] z-[-3]"
+          className="absolute top-[18%] right-[-7%] z-[-3] w-[40%]"
         />
       </div>
     </div>

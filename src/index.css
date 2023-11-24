@@ -1,8 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;500;600;700;800&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+* {
+  scroll-behavior: smooth;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
 
 html {
   box-sizing: border-box;
@@ -11,17 +18,14 @@ html {
 }
 
 body {
-  overflow-x: hidden;
-  font-family: 'Noto Sans', sans-serif;
+  font-family: "Noto Sans", sans-serif;
   position: relative;
   max-width: 1920px;
   margin: 0 auto;
   min-height: 100vh;
 }
-
-body::-webkit-scrollbar {
-  display: none;
-}
+/* body::-webkit-scrollbar {
+} */
 
 .main-container > * {
   max-width: 1140px;
