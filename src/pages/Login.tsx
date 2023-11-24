@@ -3,25 +3,42 @@ import { Button, Input } from "../components/atoms";
 import { AuthForm } from "../components/templates";
 import { useFormik } from "formik";
 import { signInValidationSchema } from "../lib/utils/validationUtils";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { login } from "../lib/services";
+import toast from "react-hot-toast";
+import { getError } from "../lib/utils";
 
 const initialValues = {
   email: "",
   password: "",
 };
 
-const Login = () => {
-  const [error, setError] = useState("");
+export const Login = () => {
+  // const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const { handleBlur, handleSubmit, handleChange, values, touched, errors } =
     useFormik({
       initialValues,
       validationSchema: signInValidationSchema,
       onSubmit: async () => {
+        setLoading(true);
         try {
-          console.log({ values });
+          const { data, error } = await login(values);
+          if (error) {
+            throw new Error(error);
+          }
+          if (data) {
+            // console.log({ data });
+            toast.success("Login successful.");
+            setLoading(false);
+            navigate("/dashboard");
+          }
         } catch (error) {
-          setError(error as string);
+          setLoading(false);
+          toast.error(getError(error));
+          // setError(getError(error));
         }
       },
     });
@@ -50,9 +67,9 @@ const Login = () => {
         error={touched.password && errors.password ? errors.password : ""}
       />
 
-      {error && <p className="my-1 text-center text-red-500">{error}</p>}
+      {/* {error && <p className="my-1 text-center text-red-500">{error}</p>} */}
 
-      <Button type="submit" className="mx-auto w-full mt-6">
+      <Button loading={loading} type="submit" className="mx-auto w-full mt-6">
         Log in
       </Button>
 
@@ -80,5 +97,3 @@ const Login = () => {
     </AuthForm>
   );
 };
-
-export default Login;

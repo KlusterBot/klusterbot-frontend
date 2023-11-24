@@ -1,19 +1,11 @@
-import { useRoutes } from "react-router";
-import { AuthLayout, RootLayout } from "./layouts";
-import { Login, NotFound, SignUp } from "../pages";
-import { RootRoutes } from "./routes";
+import { Navigate, useRoutes } from "react-router";
+import { DashboardRoutes, RootRoutes } from "./routes";
 import { AuthenticateUser, AuthorizeUser } from "./auth";
+import { Login, NotFound, SignUp } from "@/pages";
+import { RootLayout } from "./layouts";
 
 const AppRoutes = () => {
-  // const token = null;
   const routes = useRoutes([
-    {
-      element: <AuthLayout />,
-      children: [
-        { path: "/login", element: <Login /> },
-        { path: "/signup", element: <SignUp /> },
-      ],
-    },
     {
       element: <RootLayout />,
       children: [{ path: "/*", element: <RootRoutes /> }],
@@ -21,7 +13,10 @@ const AppRoutes = () => {
 
     {
       element: <AuthorizeUser />,
-      children: [{ path: "/dashboard/*", element: <Login /> }],
+      children: [
+        { path: "/dashboard", element: <Navigate to='/dashboard/home' /> },
+        { path: "/dashboard/*", element: <DashboardRoutes /> },
+      ],
     },
     {
       element: <AuthenticateUser />,
@@ -35,4 +30,4 @@ const AppRoutes = () => {
   return routes;
 };
 
-export default AppRoutes
+export default AppRoutes;

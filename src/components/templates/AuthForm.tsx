@@ -6,8 +6,7 @@ interface IFormProps
     HTMLFormElement
   > {}
 
-const AuthForm = ({ children, ...props }: IFormProps) => {
-
+export const AuthForm = ({ children, ...props }: IFormProps) => {
   return (
     <form
       {...props}
@@ -21,4 +20,3 @@ const AuthForm = ({ children, ...props }: IFormProps) => {
   );
 };
 
-export default AuthForm;

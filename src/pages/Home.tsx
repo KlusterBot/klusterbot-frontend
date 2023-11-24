@@ -11,7 +11,7 @@ import Container from "../components/Container";
 import Carousel from "../components/Carousel";
 import clsx from "clsx";
 
-const Home = () => {
+export const Home = () => {
   const h2Classes = "font-bold text-[2.4rem] text-darker-color";
   const h4Classes = "font-bold text-xl text-darker-color mb-2";
 
@@ -137,4 +137,3 @@ const Home = () => {
   );
 };
 
-export default Home;
