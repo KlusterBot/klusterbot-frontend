@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
 
 interface Props
   extends React.DetailedHTMLProps<
@@ -12,13 +14,17 @@ interface Props
   large?: boolean;
   scroll?: boolean;
   outline?: boolean;
+  loading?: boolean;
 }
+
+const antIcon = <LoadingOutlined style={{ fontSize: 16 }} spin />;
 
 const Button: React.FC<Props> = ({
   href,
   className,
   // scroll = true,
   outline,
+  loading,
   ...props
 }) => {
   const buttonClasses = `${
@@ -31,14 +37,19 @@ const Button: React.FC<Props> = ({
 
   return href ? (
     <Link className={twMerge(buttonClasses, className)} to={href}>
-      {props.children}
+      {loading ? (
+        <Spin className="min-w-[42px]" indicator={antIcon} />
+      ) : (
+        <>{props.children}</>
+      )}
     </Link>
   ) : (
-    <button
-      {...props}
-      className={twMerge(buttonClasses, className)}
-    >
-      {props.children}
+    <button {...props} className={twMerge(buttonClasses, className, loading?'bg-transparent outline-dark-blue-color border outline':'')}>
+      {loading ? (
+        <Spin className="min-w-[42px]" indicator={antIcon} />
+      ) : (
+        <>{props.children}</>
+      )}
     </button>
   );
 };

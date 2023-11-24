@@ -1,15 +1,15 @@
-import { Outlet } from "react-router-dom";
-import { createBrowserHistory } from "history";
-// import { getCurrentUser } from "../../utils/getCurrentUser";
+import { Navigate, Outlet } from "react-router-dom";
+import { AuthLayout } from "../layouts";
 
 const AuthenticateUser = () => {
-  const response = null //getCurrentUser();
-  if (response) {
-    createBrowserHistory().replace("/dashboard");
-    createBrowserHistory().go(0);
-    return null;
-  }
-  return <Outlet />;
+  const response = "yes"; //getCurrentUser();
+  return response ? (
+    <Navigate to="/dashboard" replace />
+  ) : (
+    <AuthLayout>
+      <Outlet />
+    </AuthLayout>
+  );
 };
 
 export default AuthenticateUser;

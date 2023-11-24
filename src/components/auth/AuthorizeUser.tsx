@@ -1,17 +1,16 @@
-import { Outlet } from "react-router-dom";
-import { createBrowserHistory } from "history";
-// import { getUserToken } from "../../utils/getUserToken";
-// import { getUserRole } from "../../utils/getUserRole";
-// import { USER } from "../../const/constants";
+import { Navigate, Outlet } from "react-router-dom";
+import { DashboardLayout } from "../layouts";
 
 const AuthorizeUser = () => {
-  const response = ""; //getUserToken();
+  const response = "yes"; //getUserToken();
   if (response) {
-    return <Outlet />;
+    return (
+      <DashboardLayout>
+        <Outlet />
+      </DashboardLayout>
+    );
   } else {
-    createBrowserHistory().replace("/login/");
-    createBrowserHistory().go(0);
-    return null;
+    return <Navigate replace to="/" />;
   }
 };
 

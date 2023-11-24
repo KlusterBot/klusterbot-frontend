@@ -1,7 +1,7 @@
+import { About, Contact, Home, NotFound, Services } from "@/pages";
 import { Route, Routes } from "react-router";
-import { About, Contact, Home, NotFound, Services } from "../../pages";
 
-const RootRoutes = () => {
+export const RootRoutes = () => {
   return (
     <Routes>
       <Route index element={<Home />} />
@@ -12,5 +12,3 @@ const RootRoutes = () => {
     </Routes>
   );
 };
-
-export default RootRoutes;
