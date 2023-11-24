@@ -1,5 +1,5 @@
 
-import { Chat, DashboardHome, NotFound, Settings } from "@/pages";
+import { Chat, DashboardHome, NotFound, Playground, Settings } from "@/pages";
 import { Route, Routes } from "react-router";
 
 export const DashboardRoutes = () => {
@@ -9,6 +9,7 @@ export const DashboardRoutes = () => {
       <Route path="/chat" element={<Chat />} />
       <Route path="/settings" element={<Settings />} />
       <Route path="/home" element={<DashboardHome />} />
+      <Route path="/playground" element={<Playground />} />
     </Routes>
   );
 };

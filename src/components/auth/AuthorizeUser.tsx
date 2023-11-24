@@ -1,17 +1,16 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { DashboardLayout } from "../layouts";
+import { getToken } from "@/lib/services/localStorageServices";
 
 const AuthorizeUser = () => {
-  const response = "yes"; //getUserToken();
-  if (response) {
-    return (
-      <DashboardLayout>
-        <Outlet />
-      </DashboardLayout>
-    );
-  } else {
-    return <Navigate replace to="/" />;
-  }
+  const token = getToken();
+  return token ? (
+    <DashboardLayout>
+      <Outlet />
+    </DashboardLayout>
+  ) : (
+    <Navigate replace to="/" />
+  );
 };
 
 export default AuthorizeUser;

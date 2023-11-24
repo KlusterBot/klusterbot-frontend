@@ -1,5 +1,6 @@
 import React from "react";
 import { DashboardHeader, DashboardSidebar } from "../molecules";
+import { NavProvider } from "@/context/nav_context";
 
 export const DashboardLayout = ({
   children,
@@ -7,14 +8,16 @@ export const DashboardLayout = ({
   children: React.ReactNode;
 }) => {
   return (
-    <main className="bg-white min-h-full relative flex">
-      <DashboardSidebar />
+    <NavProvider>
+      <main className="bg-white min-h-full flex">
+        <DashboardSidebar />
 
-      <section className="w-full h-full grid gap-6">
-        <DashboardHeader />
+        <section className="w-full h-full grid gap-6 relative">
+          <DashboardHeader />
 
-        <section className="py-[MIN(5%,50px)] px-[MIN(100px,5%)]">{children}</section>
-      </section>
-    </main>
+          <section className="py-6 px-[MIN(100px,5%)]">{children}</section>
+        </section>
+      </main>
+    </NavProvider>
   );
 };

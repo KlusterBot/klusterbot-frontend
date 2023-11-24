@@ -1,9 +1,10 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { AuthLayout } from "../layouts";
+import { getToken } from "@/lib/services/localStorageServices";
 
 const AuthenticateUser = () => {
-  const response = "yes"; //getCurrentUser();
-  return response ? (
+  const token = getToken();
+  return token ? (
     <Navigate to="/dashboard" replace />
   ) : (
     <AuthLayout>

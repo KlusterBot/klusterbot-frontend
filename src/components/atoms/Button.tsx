@@ -19,7 +19,7 @@ interface Props
 
 const antIcon = <LoadingOutlined style={{ fontSize: 16 }} spin />;
 
-const Button: React.FC<Props> = ({
+export const Button: React.FC<Props> = ({
   href,
   className,
   // scroll = true,
@@ -54,4 +54,3 @@ const Button: React.FC<Props> = ({
   );
 };
 
-export default Button;
