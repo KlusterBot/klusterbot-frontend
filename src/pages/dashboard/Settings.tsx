@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export const Settings = () => {
-    const API = import.meta.env.VITE_REACT_APP_BASE_URL;
+    const API = import.meta.env.VITE_REACT_APP_REAL_BASE_URL;
     const [form, setForm] = useState({
         company: "",
         website: "",
@@ -48,7 +48,7 @@ export const Settings = () => {
                 formData.append("logo", photo);
                 const token = localStorage.getItem("token") || "";
                 try {
-                    const response = await fetch(API + "/upload", {
+                    const response = await fetch(API + "/api/upload", {
                         method: "POST",
                         body: formData,
                         headers: { Authorization: "Bearer " + token },
@@ -75,7 +75,7 @@ export const Settings = () => {
                 <img
                     alt="Logo"
                     onClick={uploadFile}
-                    src={form.logo}
+                    src={API + "/files/" + form.logo}
                     className="block mx-auto aspect-square object-contain rounded-full overflow-hidden w-[100px] h-auto justify-center items-center cursor-pointer"
                 />
 
