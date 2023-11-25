@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export const Settings = () => {
+    const API = import.meta.env.VITE_REACT_APP_BASE_URL;
     const [form, setForm] = useState({
         company: "",
         website: "",
@@ -12,6 +13,7 @@ export const Settings = () => {
         theme: "",
         token: "",
         name: "",
+        logo: "",
     });
 
     const fetchData = async () => {
@@ -34,36 +36,32 @@ export const Settings = () => {
     }, []);
 
     const uploadFile = () => {
-        let file = document.createElement("input");
+        const file = document.createElement("input");
         file.type = "file";
         file.onchange = async () => {
+            if (!file || !file.files || file.files.length === 0) return;
+
             if (file.files[0]) {
-                let photo = file.files[0];
-                let formData = new FormData();
+                const photo = file.files[0];
+                const formData = new FormData();
 
                 formData.append("logo", photo);
                 const token = localStorage.getItem("token") || "";
                 try {
-                    let response = await fetch(api + "/api/upload", {
+                    const response = await fetch(API + "/upload", {
                         method: "POST",
                         body: formData,
                         headers: { Authorization: "Bearer " + token },
                     });
-                    let result = await response.json();
+                    const result = await response.json();
 
-                    setLogo(result.data.filename + "?cache=" + Math.random());
-                    setLoading(false);
-                    setModalType("success");
-                    setModalMessage(result.message);
-                    setOpen(true);
+                    setForm({
+                        ...form,
+                        logo: result.data.filename + "?cache=" + Math.random(),
+                    });
                 } catch (error) {
-                    setLoading(false);
-                    setModalType("error");
-                    setModalMessage(error.message);
-                    setOpen(true);
+                    toast.error(getError(error));
                 }
-            } else {
-                console.log(file.files);
             }
         };
         file.click();
@@ -74,7 +72,12 @@ export const Settings = () => {
             <h2 className="font-bold text-dark-blue-color my-4">Update info</h2>
 
             <div className="grid place-content-center text-center">
-                <img className="block mx-auto aspect-square rounded-full overflow-hidden w-[100px] h-auto justify-center items-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"></img>
+                <img
+                    alt="Logo"
+                    onClick={uploadFile}
+                    src={form.logo}
+                    className="block mx-auto aspect-square object-contain rounded-full overflow-hidden w-[100px] h-auto justify-center items-center cursor-pointer"
+                />
 
                 <p className="text-xl mt-2">{form.company}</p>
                 <p className="">{form.name}</p>

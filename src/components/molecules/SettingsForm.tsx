@@ -22,8 +22,6 @@ export const SettingsForm = () => {
             if (data.success) {
                 setForm(data.data);
             }
-
-            console.log(data);
         } catch (error) {
             toast.error(getError(error));
         }
@@ -41,8 +39,7 @@ export const SettingsForm = () => {
 
             setLoading(false);
         } catch (error) {
-            console.log({ error: getError(error) });
-            return { error: getError(error) };
+            toast.error(getError(error));
         }
     };
 
