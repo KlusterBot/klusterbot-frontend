@@ -2,6 +2,7 @@ import { SettingsForm } from "@/components/molecules";
 import { baseUrl, getError } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { getToken } from "@/lib/services/localStorageServices";
 
 export const Settings = () => {
     const API = import.meta.env.VITE_REACT_APP_REAL_BASE_URL;
@@ -46,8 +47,8 @@ export const Settings = () => {
                 const formData = new FormData();
 
                 formData.append("logo", photo);
-                const token = localStorage.getItem("token") || "";
                 try {
+                    const token = getToken();
                     const response = await fetch(API + "/api/upload", {
                         method: "POST",
                         body: formData,
