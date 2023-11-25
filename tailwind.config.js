@@ -13,6 +13,7 @@ export default {
       },
       colors: {
         "dark-blue-color": "#153ABA",
+        "light-blue-color": "#C4E0FD",
         "darker-color": "#2B2B2B",
         "lighter-color": "#626262",
       },

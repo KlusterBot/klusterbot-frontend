@@ -1,5 +1,5 @@
+import Button from "../UI/Button";
 import Container from "./Container";
-import GetStartedButton from "./GetStartedButton";
 import PointerImage from "./PointerImage";
 
 const HeroSection = () => {
@@ -14,7 +14,7 @@ const HeroSection = () => {
             Transform customer support through our AI-driven solution, providing
             unmatched efficiency and seamless assistance.
           </p>
-          <GetStartedButton className="mt-6" />
+          <Button buttonText="Get Started" className="mt-6" />
         </div>
         <PointerImage className="scale-[.85]" />
       </div>

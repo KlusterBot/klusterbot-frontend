@@ -1,14 +1,11 @@
-import { About, Contact, Home, NotFound, Services } from "@/pages";
+import { Home, NotFound } from "@/pages";
 import { Route, Routes } from "react-router";
 
 export const RootRoutes = () => {
   return (
     <Routes>
       <Route index element={<Home />} />
-      <Route path="/about-us" element={<About />} />
       <Route path="/*" element={<NotFound />} />
-      <Route path="/services" element={<Services />} />
-      <Route path="/contact-us" element={<Contact />} />
     </Routes>
   );
 };
