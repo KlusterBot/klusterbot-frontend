@@ -26,7 +26,7 @@ const baseQueryWithReauth = async (
 ) => {
   const result = await baseQuery(args, api, extraOptions);
   if (result?.error?.status === 401) {
-    toast.error("Not authorized");
+    toast.error("Not authorized, please login.");
     window.location.replace("/login");
   }
   return result;
