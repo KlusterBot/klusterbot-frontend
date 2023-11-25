@@ -7,6 +7,8 @@ import { useFormik } from "formik";
 import { signUpValidationSchema } from "../lib/utils/validationUtils";
 import { signUp } from "../lib/services";
 import { getError } from "../lib/utils";
+import { useAppDispatch } from "@/store/hooks/hooks";
+import { setNewUserToTrue } from "@/store/features/newUserSlice";
 
 const initialValues = {
   name: "",
@@ -20,6 +22,7 @@ export const SignUp = () => {
   const [loading, setLoading] = useState(false);
   // const router = useRo
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const {
     handleBlur,
@@ -42,10 +45,11 @@ export const SignUp = () => {
           throw new Error(error);
         }
         console.log({ data });
-        toast.success("Sign up successful. Set up your bot, then login to continue!");
+        toast.success("Sign up successful. Login to continue!");
         setLoading(false);
         resetForm();
-        navigate("/setup");
+        dispatch(setNewUserToTrue());
+        navigate("/login");
       } catch (error) {
         setLoading(false);
         toast.error(getError(error));

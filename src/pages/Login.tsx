@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { login } from "../lib/services";
 import toast from "react-hot-toast";
 import { getError } from "../lib/utils";
+import { useAppSelector } from "@/store/hooks/hooks";
 
 const initialValues = {
   email: "",
@@ -17,6 +18,7 @@ export const Login = () => {
   // const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const isNewUser = useAppSelector((state) => state.isNewUser);
 
   const { handleBlur, handleSubmit, handleChange, values, touched, errors } =
     useFormik({
@@ -33,7 +35,7 @@ export const Login = () => {
             // console.log({ data });
             toast.success("Login successful.");
             setLoading(false);
-            navigate("/dashboard");
+            isNewUser ? navigate("/setup") : navigate("/dashboard");
           }
         } catch (error) {
           setLoading(false);

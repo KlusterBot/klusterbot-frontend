@@ -6,10 +6,23 @@ import { useState } from "react";
 import React from "react";
 import { Navigate, useNavigate } from "react-router";
 import { getToken } from "@/lib/services/localStorageServices";
+import { useAppDispatch, useAppSelector } from "@/store/hooks/hooks";
+import { setNewUserToFalse } from "@/store/features/newUserSlice";
 
 const Setup = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [step, setStep] = useState(1);
+  const isNewUser = useAppSelector((state) => state.isNewUser);
+
+  console.log(isNewUser);
+
+  const inputClass =
+    "border-solid rounded-lg border-[1px] border-dark-blue-color p-2 outline-none";
+  const inputContainerClass = "flex flex-col gap-2.5 text-gray-500 w-[60%]";
+
+  const token = getToken();
+
   const goToNextStep = () => {
     setStep((prev) => prev + 1);
   };
@@ -17,12 +30,9 @@ const Setup = () => {
     setStep((prev) => prev - 1);
   };
 
-  const inputClass =
-    "border-solid rounded-lg border-[1px] border-dark-blue-color p-2 outline-none";
-  const inputContainerClass = "flex flex-col gap-2.5 text-gray-500 w-[60%]";
-
-  const login = () => {
-    navigate("/login");
+  const goToDashboard = () => {
+    navigate("/dashboard");
+    dispatch(setNewUserToFalse());
   };
 
   const submitFormHandler = (event: React.FormEvent<HTMLFormElement>) => {
@@ -30,9 +40,10 @@ const Setup = () => {
     goToNextStep();
   };
 
-  const token = getToken();
-  return token ? (
+  return token && !isNewUser ? (
     <Navigate to="/dashboard/settings" replace />
+  ) : !token ? (
+    <Navigate to="/signup" replace />
   ) : (
     <div className="w-screen h-screen overflow-hidden">
       <motion.div
@@ -134,7 +145,7 @@ const Setup = () => {
                 className="!py-[.5rem] w-44"
               />
               <Button
-                onClick={login}
+                onClick={goToDashboard}
                 buttonText="Continue"
                 className="!py-[.2rem] w-44"
               />
