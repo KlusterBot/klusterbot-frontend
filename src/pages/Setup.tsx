@@ -4,8 +4,11 @@ import { motion } from "framer-motion";
 import { IoCopyOutline } from "react-icons/io5";
 import { useState } from "react";
 import React from "react";
+import { Navigate, useNavigate } from "react-router";
+import { getToken } from "@/lib/services/localStorageServices";
 
 const Setup = () => {
+  const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const goToNextStep = () => {
     setStep((prev) => prev + 1);
@@ -18,12 +21,19 @@ const Setup = () => {
     "border-solid rounded-lg border-[1px] border-dark-blue-color p-2 outline-none";
   const inputContainerClass = "flex flex-col gap-2.5 text-gray-500 w-[60%]";
 
+  const login = () => {
+    navigate("/login");
+  };
+
   const submitFormHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     goToNextStep();
   };
 
-  return (
+  const token = getToken();
+  return token ? (
+    <Navigate to="/dashboard/settings" replace />
+  ) : (
     <div className="w-screen h-screen overflow-hidden">
       <motion.div
         className="flex h-full w-full"
@@ -52,7 +62,7 @@ const Setup = () => {
                   type="text"
                   name="name"
                   required
-                  placeholder="Klustermann"
+                  placeholder="Example company"
                   className={`${inputClass}`}
                 />
               </div>
@@ -61,6 +71,7 @@ const Setup = () => {
                 <input
                   type="url"
                   name="website"
+                  placeholder="https://www.example.com"
                   required
                   className={`${inputClass}`}
                 />
@@ -68,8 +79,10 @@ const Setup = () => {
               <div className={`${inputContainerClass}`}>
                 <label htmlFor="about">About Company</label>
                 <textarea
+                  placeholder="Tell us about your company to enable us serve you better."
                   required
                   name="about"
+                  minLength={50}
                   rows={4}
                   className={`${inputClass} min-h-[5rem]`}
                 ></textarea>
@@ -121,7 +134,7 @@ const Setup = () => {
                 className="!py-[.5rem] w-44"
               />
               <Button
-                onClick={goToNextStep}
+                onClick={login}
                 buttonText="Continue"
                 className="!py-[.2rem] w-44"
               />
