@@ -4,7 +4,8 @@ import { motion } from "framer-motion";
 import { IoCopyOutline } from "react-icons/io5";
 import { useState } from "react";
 import React from "react";
-import { useNavigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
+import { getToken } from "@/lib/services/localStorageServices";
 
 const Setup = () => {
   const navigate = useNavigate();
@@ -29,7 +30,10 @@ const Setup = () => {
     goToNextStep();
   };
 
-  return (
+  const token = getToken();
+  return token ? (
+    <Navigate to="/dashboard/settings" replace />
+  ) : (
     <div className="w-screen h-screen overflow-hidden">
       <motion.div
         className="flex h-full w-full"

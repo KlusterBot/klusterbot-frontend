@@ -1,5 +1,4 @@
 import {
-  CartesianGrid,
   Tooltip,
   Line,
   LineChart,
@@ -71,7 +70,7 @@ const ConversationsChart = () => {
         >
           <p>On average</p>
           <XAxis dataKey={"day"} />
-          <YAxis type="number" tickLine={false}  />
+          <YAxis type="number" tickLine={false} />
           <Tooltip content={<CustomTooltip />} />
           <Line
             type="monotone"
