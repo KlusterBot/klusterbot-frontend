@@ -12,8 +12,8 @@ import Container from "../components/Container";
 import Carousel from "../components/Carousel";
 
 export const Home = () => {
-  const h2Classes = "font-bold text-[2.4rem] text-darker-color";
-  const h4Classes = "font-bold text-xl text-darker-color mb-2";
+  const h2Classes = "font-bold sm:text-[2.4rem] text-darker-color text-[1.3rem]";
+  const h4Classes = "font-bold sm:text-xl text-darker-color mb-2";
 
   return (
     <div className="text-lighter-color">
@@ -22,14 +22,14 @@ export const Home = () => {
       {/* SOLVE.... */}
       <Container>
         <div
-          className="flex gap-8 items-center justify-between pt-32 pb-16"
+          className="flex gap-8 items-center justify-between md:pt-32 md:pb-16  py-8"
           id="about-us"
         >
-          <div className="flex flex-col gap-8 w-[55%]">
+          <div className="flex flex-col gap-8 w-[55%] max-md:w-full">
             <h2 className={clsx(`${h2Classes}`)}>
               Solve customer problems instantly using AI
             </h2>
-            <div className="flex gap-8 justify-between">
+            <div className="flex gap-8 justify-between flex-wrap">
               <div>
                 <h4 className={clsx(`${h4Classes}`)}>
                   Reduce your response time
@@ -50,13 +50,13 @@ export const Home = () => {
             </div>
             <Button buttonText="Get Started" bordered />
           </div>
-          <img src={chat} alt="" />
+          <img src={chat} alt="" className="w-[45%] md:block hidden" />
         </div>
       </Container>
 
       {/* BANNER */}
       <Container className="bg-primary-light-blue">
-        <h1 className="text-3xl text-center font-bold py-32 w-[60%]">
+        <h1 className="sm:text-3xl text-xl text-center font-bold md:py-32 md:w-[60%] py-8">
           We collaborate with all enterprises (SMEs, MNEs) to facilitate growth
           in Kluster
         </h1>
@@ -65,10 +65,10 @@ export const Home = () => {
       {/* INTERACT .... */}
       <Container>
         <div
-          className="flex gap-8 py-32 items-center justify-between"
+          className="flex gap-8  py-8 md:py-32 items-center justify-between"
           id="services"
         >
-          <div className="w-[45%]">
+          <div className="w-[45%] max-md:w-full">
             <h2 className={clsx(`${h2Classes} mb-8`)}>
               Interact with visitors on your website through live chat
             </h2>
@@ -81,49 +81,51 @@ export const Home = () => {
               cultivate loyalty and convert them into long-term customers.
             </p>
           </div>
-          <img src={interactions} alt="" />
+          <img src={interactions} alt="" className="w-[45%] md:block hidden" />
         </div>
       </Container>
 
       {/* FAQS... */}
-      <Container>
-        <h2 className={clsx(`${h2Classes} text-center`)}>
-          Automate frequently asked questions.
-        </h2>
-        <p className="p-4 text-center">
-          Our chatbot can reduce the workload on your team by addressing
-          frequently asked questions.
-        </p>
-        <div className="flex items-center justify-between gap-8">
-          <img src={faqChat} alt="" className="scale-[.7]" />
-          <div>
-            <h4 className={clsx(`${h4Classes}`)}>Complete self-service</h4>
-            <p>
-              Most frequently asked questions by visitors are well attended to
-              by our chatbots, so you can focus on more productive task.
-            </p>
-            <Button buttonText="Get Started" bordered className="mt-8" />
+      <Container className="">
+        <div className="flex flex-col gap-8  py-8 md:pb-32 items-center justify-between">
+          <h2 className={clsx(`${h2Classes} text-center`)}>
+            Automate frequently asked questions.
+          </h2>
+          <p className="p-4 text-center">
+            Our chatbot can reduce the workload on your team by addressing
+            frequently asked questions.
+          </p>
+          <div className="flex items-center justify-between gap-8 mb-8">
+            <img src={faqChat} alt="" className="w-[45%] sm:block hidden" />
+            <div>
+              <h4 className={clsx(`${h4Classes}`)}>Complete self-service</h4>
+              <p>
+                Most frequently asked questions by visitors are well attended to
+                by our chatbots, so you can focus on more productive task.
+              </p>
+              <Button buttonText="Get Started" bordered className="mt-8" />
+            </div>
           </div>
-        </div>
-        <div className="flex items-center flex-row-reverse justify-between gap-8">
-          <img src={faqChat2} alt="" className="scale-[.8]" />
-          <div className="">
-            <h4 className={clsx(`${h4Classes}`)}>
-              Swift resolution for customers
-            </h4>
-            <p>
-              Unlock premium functionalities. Streamline your customer service
-              with Kluster AI. Collaborate with our effective AI to automate
-              your business.
-            </p>
-            <Button buttonText="Get Started" bordered className="mt-8" icon />
+          <div className="flex items-center flex-row-reverse justify-between gap-8 mb-6">
+            <img src={faqChat2} alt="" className="w-[45%] sm:block hidden" />
+            <div className="">
+              <h4 className={clsx(`${h4Classes}`)}>
+                Swift resolution for customers
+              </h4>
+              <p>
+                Unlock premium functionalities. Streamline your customer service
+                with Kluster AI. Collaborate with our effective AI to automate
+                your business.
+              </p>
+              <Button buttonText="Get Started" bordered className="mt-8" icon />
+            </div>
           </div>
         </div>
       </Container>
 
       {/* CUSTOM REVIEWS SECTION */}
       <Container className="bg-primary-light-blue">
-        <div className=" pt-16 pb-24 flex flex-col gap-14">
+        <div className=" md:pt-16 md:pb-24 flex flex-col gap-14 py-8">
           <div>
             <h2 className={clsx(`${h2Classes} text-center`)}>
               Why choose us ?

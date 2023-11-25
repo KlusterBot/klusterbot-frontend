@@ -8,14 +8,14 @@ import Logo from "./Logo";
 
 const Footer = () => {
   const headerClass = "font-semibold text-lg";
-  const footerItemClass = "flex flex-col gap-4";
+  const footerItemClass = "flex flex-col gap-4 flex-1 min-w-[8rem]";
   return (
     <div
-      className="text-[#5c5c5c] flex items-center gap-40 px-20 py-14"
+      className="text-[#5c5c5c] flex items-center gap-10 md:px-20 px-6 py-14 justify-between flex-wrap"
       id="contact-us"
     >
-      <Logo className="scale-[2.2]" />
-      <div className="flex justify-between flex-auto">
+      <Logo className="w-[7rem]" />
+      <div className="flex md:justify-between w-[80%] flex-wrap gap-10 max-lg:w-full">
         <div className={footerItemClass}>
           <h3 className={headerClass}>Home</h3>
           <a href="#about-us">About</a>
