@@ -42,10 +42,10 @@ export const SignUp = () => {
           throw new Error(error);
         }
         console.log({ data });
-        toast.success("Sign up successful. Login to continue!");
+        toast.success("Sign up successful. Set up your bot, then login to continue!");
         setLoading(false);
         resetForm();
-        navigate("/login");
+        navigate("/setup");
       } catch (error) {
         setLoading(false);
         toast.error(getError(error));

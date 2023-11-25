@@ -3,6 +3,7 @@ import { DashboardRoutes, RootRoutes } from "./routes";
 import { AuthenticateUser, AuthorizeUser } from "./auth";
 import { Login, NotFound, SignUp } from "@/pages";
 import { RootLayout } from "./layouts";
+import Setup from "@/pages/Setup";
 
 const AppRoutes = () => {
   const routes = useRoutes([
@@ -24,6 +25,10 @@ const AppRoutes = () => {
         { path: "/signup", element: <SignUp /> },
         { path: "/login", element: <Login /> },
       ],
+    },
+    {
+      element: <Setup />,
+      path:"/setup"
     },
     { path: "*", element: <NotFound /> },
   ]);
