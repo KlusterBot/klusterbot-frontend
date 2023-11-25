@@ -12,7 +12,7 @@ const SetupForm = ({
     <div
       className={`relative inline-block  min-h-full min-w-full z-[3] ${className}`}
     >
-      <Logo className="absolute top-[2rem] left-[3rem]" />
+      <Logo className="absolute top-[2rem] left-[3rem] z-20" />
       {children}
       <PointerImage className="!absolute bottom-0 left-[3.5%] w-[12rem]" />
     </div>

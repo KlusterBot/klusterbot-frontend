@@ -6,7 +6,7 @@ export default {
     extend: {
       fontFamily: {
         body: `'Noto Sans', sans-serif`,
-        galindo: ['Galindo', ...defaultTheme.fontFamily.sans],
+        galindo: ["'Galindo'", "sans-serif"],
       },
       backgroundColor: {
         "primary-dark-blue": "#153ABA",
