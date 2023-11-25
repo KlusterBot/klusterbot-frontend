@@ -1,34 +1,61 @@
-import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, Input } from "../components/atoms";
 import { AuthForm } from "../components/templates";
 import { useState } from "react";
 import { useFormik } from "formik";
 import { signUpValidationSchema } from "../lib/utils/validationUtils";
+import { signUp } from "../lib/services";
+import { getError } from "../lib/utils";
 
 const initialValues = {
   name: "",
   email: "",
   password: "",
+  confirmPassword: "",
 };
 
-const SignUp = () => {
-  const [error, setError] = useState("");
+export const SignUp = () => {
+  // const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  // const router = useRo
+  const navigate = useNavigate();
 
-  const { handleBlur, handleSubmit, handleChange, values, touched, errors } =
-    useFormik({
-      initialValues,
-      validationSchema: signUpValidationSchema,
-      onSubmit: async () => {
-        try {
-          console.log({ values });
-        } catch (error) {
-          setError(error as string);
+  const {
+    handleBlur,
+    handleSubmit,
+    resetForm,
+    handleReset,
+    handleChange,
+    values,
+    touched,
+    errors,
+  } = useFormik({
+    initialValues,
+    validationSchema: signUpValidationSchema,
+    onSubmit: async () => {
+      // setError('')
+      setLoading(true);
+      try {
+        const { data, error } = await signUp(values);
+        if (error) {
+          throw new Error(error);
         }
-      },
-    });
+        console.log({ data });
+        toast.success("Sign up successful. Login to continue!");
+        setLoading(false);
+        resetForm();
+        navigate("/login");
+      } catch (error) {
+        setLoading(false);
+        toast.error(getError(error));
+        // setError(getError(error));
+      }
+    },
+  });
 
   return (
-    <AuthForm onSubmit={handleSubmit}>
+    <AuthForm onSubmit={handleSubmit} onReset={handleReset}>
       <Input
         name="name"
         id="name"
@@ -60,10 +87,29 @@ const SignUp = () => {
         value={values.password}
         error={touched.password && errors.password ? errors.password : ""}
       />
+      <Input
+        name="confirmPassword"
+        id="confirmPassword"
+        label="Confirm password"
+        placeholder="Confirm password"
+        type="password"
+        onChange={handleChange}
+        onBlur={handleBlur}
+        value={values.confirmPassword}
+        error={
+          touched.confirmPassword && errors.confirmPassword
+            ? errors.confirmPassword
+            : ""
+        }
+      />
 
-      {error && <p className="my-1 text-center text-red-500">{error}</p>}
+      {/* {error && (
+        <p className="my-1 font-light text-sm text-center text-red-500">
+          {error}
+        </p>
+      )} */}
 
-      <Button type="submit" className="mx-auto w-full mt-6">
+      <Button loading={loading} type="submit" className="mx-auto w-full mt-6">
         Sign Up
       </Button>
 
@@ -91,5 +137,3 @@ const SignUp = () => {
     </AuthForm>
   );
 };
-
-export default SignUp;

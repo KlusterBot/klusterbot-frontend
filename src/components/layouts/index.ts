@@ -1,5 +1,3 @@
-import RootLayout from "./RootLayout";
-import AuthLayout from "./AuthLayout";
-
-
-export {RootLayout, AuthLayout}
+export * from "./RootLayout";
+export * from "./AuthLayout";
+export * from "./DashboardLayout"

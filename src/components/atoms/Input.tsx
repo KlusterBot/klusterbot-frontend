@@ -1,4 +1,3 @@
-"use client";
 import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { twMerge } from "tailwind-merge";
@@ -25,7 +24,7 @@ interface IInputProps extends InputProps {
   touched?: boolean;
 }
 
-const Input = ({
+export const Input = ({
   isTextArea,
   label,
   labelStyle,
@@ -54,7 +53,7 @@ const Input = ({
           <textarea
             {...props}
             className={twMerge(
-              `border text-lg py-3 px-4 rounded-[8px] flex-1 w-full  placeholder:font-body ${
+              `border texvt-lg py-3 px-4 rounded-[8px] flex-1 w-full  placeholder:font-body ${
                 error
                   ? "text-error-1 border-error-1"
                   : "border-[#CCC] text-[#020202]"
@@ -76,7 +75,7 @@ const Input = ({
                     : props.type
                 }`}
                 className={twMerge(
-                  `border py-3 px-4 text-lg rounded-[8px] flex-1 w-full placeholder:font-body ${
+                  `border py-3 px-4 tevxt-lg rounded-[8px] flex-1 w-full placeholder:font-body ${
                     props.name === "password" ? "pr-12" : ""
                   } ${
                     error
@@ -112,7 +111,6 @@ const Input = ({
   );
 };
 
-export default Input;
 
 // const CheckboxInput = (props: { [key: string]: any }) => (
 //   <input

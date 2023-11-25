@@ -1,4 +1,2 @@
-import AuthRoutes from "./AuthRoutes";
-import RootRoutes from "./RootRoutes";
-
-export {AuthRoutes, RootRoutes}
+export * from "./RootRoutes";
+export * from './DashboardRoutes'
