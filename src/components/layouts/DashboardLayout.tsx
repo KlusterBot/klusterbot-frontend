@@ -9,10 +9,10 @@ export const DashboardLayout = ({
 }) => {
   return (
     <NavProvider>
-      <main className="bg-white min-h-full flex">
+      <main className="bg-white min-h-full flex !oveflow-hidden">
         <DashboardSidebar />
 
-        <section className="w-full h-full grid gap-6 relative">
+        <section className="w-full h-full grid gap-6 relative overf">
           <DashboardHeader />
 
           <section className="py-6 px-[MIN(100px,5%)]">{children}</section>
