@@ -5,14 +5,14 @@ import { motion } from "framer-motion";
 import { IoCopyOutline } from "react-icons/io5";
 import { ChangeEvent, useState } from "react";
 import React from "react";
-import { useNavigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 import { getToken } from "@/lib/services/localStorageServices";
 import { useSetupBotMutation } from "@/store/services/api/setup";
 import { ClipLoader } from "react-spinners";
 import toast from "react-hot-toast";
 import { jwtDecode } from "jwt-decode";
 
-const Setup = () => {
+export const Setup = () => {
   const formDetailsInitState = {
     document: "",
     company: "",
@@ -252,5 +252,3 @@ const Setup = () => {
     </div>
   );
 };
-
-export default Setup;
