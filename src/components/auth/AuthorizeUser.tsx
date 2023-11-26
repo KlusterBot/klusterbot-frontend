@@ -4,6 +4,7 @@ import { getToken } from "@/lib/services/localStorageServices";
 
 const AuthorizeUser = () => {
   const token = getToken();
+  // const user = getUser()
   return token ? (
     <DashboardLayout>
       <Outlet />
