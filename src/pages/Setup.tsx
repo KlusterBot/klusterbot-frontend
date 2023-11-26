@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { IoCopyOutline } from "react-icons/io5";
 import { ChangeEvent, useState } from "react";
 import React from "react";
-import { Navigate, useNavigate } from "react-router";
+import {  useNavigate } from "react-router";
 import { getToken } from "@/lib/services/localStorageServices";
 import { useSetupBotMutation } from "@/store/services/api/setup";
 import { ClipLoader } from "react-spinners";
@@ -96,12 +96,6 @@ export const Setup = () => {
       reader.readAsText(file);
     }
   };
-
-  const isSetupComplete = false;
-
-  if (isSetupComplete) {
-    return <Navigate to="/dashboard" replace />;
-  }
 
   return (
     <div className="w-screen h-screen overflow-hidden bg-white">
