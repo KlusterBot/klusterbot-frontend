@@ -7,39 +7,16 @@ import toast from "react-hot-toast";
 
 export const Playground = () => {
     const user = JSON.parse((localStorage.getItem("user") as string) || "{}");
-    const API = import.meta.env.VITE_REACT_APP_REAL_BASE_URL;
-    const CHATBOT = import.meta.env.VITE_REACT_APP_CHATBOT_URL;
+    const PLAYGROUND = import.meta.env.VITE_REACT_APP_PLAYGROUND_URL;
 
-    // Random string generator
-    const randomString = (length: number) => {
-        const chars =
-            "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        let result = "";
-        for (let i = length; i > 0; --i)
-            result += chars[Math.floor(Math.random() * chars.length)];
-        return result;
-    };
-
-    const [visitor, setVisitor] = useState(randomString(10));
-
-    const frameUrl = `${CHATBOT}/support/${user.id}/${visitor}`;
-
-    useEffect(() => {
-        const scriptUrl = `${API}/api/me/embed/${user.id}/kluster.js`;
-        const script = document.createElement("script");
-        script.src = scriptUrl;
-        script.async = true;
-        document.body.appendChild(script);
-        return () => {
-            document.body.removeChild(script);
-        };
-    }, []);
+    const frameUrl = `${PLAYGROUND}/?id=${user.id}`;
 
     const [loading, setLoading] = useState(false);
     const [form, setForm] = useState({
         company: "",
         website: "",
         document: "",
+        about: "",
     });
 
     const fetchData = async () => {
@@ -78,6 +55,35 @@ export const Playground = () => {
             setLoading(false);
         } catch (error) {
             toast.error(getError(error));
+            setLoading(false);
+        }
+    };
+
+    const startBot = async () => {
+        try {
+            setLoading(true);
+
+            const response = await baseUrl.post("/ai/start");
+            const data = response?.data;
+            toast.success(data.message);
+            setLoading(false);
+        } catch (error) {
+            toast.error(getError(error));
+            setLoading(false);
+        }
+    };
+
+    const stopBot = async () => {
+        try {
+            setLoading(true);
+
+            const response = await baseUrl.post("/ai/stop");
+            const data = response?.data;
+            toast.success(data.message);
+            setLoading(false);
+        } catch (error) {
+            toast.error(getError(error));
+            setLoading(false);
         }
     };
 
@@ -88,19 +94,20 @@ export const Playground = () => {
                 <div className="kluster-chatbot">
                     <DeviceFrameset zoom={0.7} device="iPhone 8" color="black">
                         <iframe
-                            id="kluster_iframe"
                             title="chatbot"
                             src={frameUrl}
                             className="w-full h-full"
                         ></iframe>
                     </DeviceFrameset>
                 </div>
+
                 <div>
                     <Input
-                        rows={15}
+                        rows={12}
                         className="w-[300px]"
                         isTextArea
                         placeholder="Company Info"
+                        value={form.about}
                         onChange={(e) => {
                             setForm({ ...form, document: e.target.value });
                         }}
@@ -111,6 +118,20 @@ export const Playground = () => {
                         disabled={loading}
                     >
                         Update Bot
+                    </Button>
+                    <Button
+                        className="m-5 w-full bg-[green]"
+                        onClick={startBot}
+                        disabled={loading}
+                    >
+                        Start Bot
+                    </Button>
+                    <Button
+                        className="m-5 w-full bg-[red]"
+                        onClick={stopBot}
+                        disabled={loading}
+                    >
+                        Stop Bot
                     </Button>
                 </div>
             </div>
