@@ -99,12 +99,7 @@ const Setup = () => {
     }
   };
 
-  return token && isVerified ? (
-    <Navigate to="/dashboard" replace />
-  ) : !token ? (
-    <Navigate to="/login" replace />
-  ) : (
-    <div className="w-screen h-screen overflow-hidden bg-white">
+  return <div className="w-screen h-screen overflow-hidden bg-white">
       <motion.div
         className="flex h-full w-full "
         animate={{ x: `${-(step - 1) * 100}%` }}
@@ -250,7 +245,6 @@ const Setup = () => {
         </SetupForm>
       </motion.div>
     </div>
-  );
 };
 
 export default Setup;
