@@ -5,10 +5,9 @@ import { motion } from "framer-motion";
 import { IoCopyOutline } from "react-icons/io5";
 import { ChangeEvent, useState } from "react";
 import React from "react";
-import { Navigate, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { getToken } from "@/lib/services/localStorageServices";
 import { useSetupBotMutation } from "@/store/services/api/setup";
-import { useAppSelector } from "@/store/hooks/hooks";
 import { ClipLoader } from "react-spinners";
 import toast from "react-hot-toast";
 import { jwtDecode } from "jwt-decode";
@@ -21,7 +20,6 @@ const Setup = () => {
   };
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
-  const isVerified = useAppSelector((state) => state.isVerified);
   const [setupBot, { isLoading, isError }] = useSetupBotMutation();
   const [formDetails, setFormDetails] = useState(formDetailsInitState);
 
@@ -99,11 +97,7 @@ const Setup = () => {
     }
   };
 
-  return token && isVerified ? (
-    <Navigate to="/dashboard" replace />
-  ) : !token ? (
-    <Navigate to="/login" replace />
-  ) : (
+  return (
     <div className="w-screen h-screen overflow-hidden bg-white">
       <motion.div
         className="flex h-full w-full "
