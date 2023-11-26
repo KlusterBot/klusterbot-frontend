@@ -3,9 +3,9 @@ import Button from "../UI/Button";
 import { motion } from "framer-motion";
 import { IoCopyOutline } from "react-icons/io5";
 import { useState } from "react";
-import React from "react";
+import { Navigate } from "react-router";
 
-const Setup = () => {
+export const Setup = () => {
   const [step, setStep] = useState(1);
   const goToNextStep = () => {
     setStep((prev) => prev + 1);
@@ -22,6 +22,12 @@ const Setup = () => {
     event.preventDefault();
     goToNextStep();
   };
+
+  const isSetupComplete = false;
+
+  if (isSetupComplete) {
+    return <Navigate to="/dashboard" replace />;
+  }
 
   return (
     <div className="w-screen h-screen overflow-hidden">
