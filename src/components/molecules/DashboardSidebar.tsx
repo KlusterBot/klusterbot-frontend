@@ -41,7 +41,7 @@ export const DashboardSidebar = () => {
       <aside
         className={`
         ${isOpen ? "translate-x-0" : "-translate-x-[100%]"}
-        absolute z-20 bg-white -translate-x-[100%] transition-all duration-300 md:sticky md:translate-x-0 left-0 top-0 border-r border-dark-blue-color flex flex-col gap-y-16 gap-8 w-[MIN(100%,244px)] md:min-w-[244px] bg-dark h-[MIN(100vh,1080px)] p-4 py-6 shadow-sm `}
+        absolute z-20 bg-white -translate-x-[100%] transition-all duration-300 md:sticky md:translate-x-0 left-0 top-0 border-r border-dark-blue-color flex flex-col gap-y-16 gap-8 w-[MIN(100%,244px)] md:min-w-[244px] bg-dark h-[MIN(100vh,1080px)] p-4 py-6 shadow-sm`}
       >
         {/* <div className="aspect-square max-w-[52px] h-auto"> */}
         <div className="flex items-center gap-4">

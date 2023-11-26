@@ -42,7 +42,7 @@ export const SignUp = () => {
           throw new Error(error);
         }
         console.log({ data });
-        toast.success("Sign up successful. Set up your bot, then login to continue!");
+        toast.success("Sign up successful. Set up bot to continue!");
         setLoading(false);
         resetForm();
         navigate("/setup");
@@ -120,7 +120,7 @@ export const SignUp = () => {
         </Link>
       </div>
 
-      <div className="w-full grid gap-4 py-4 p-2 ">
+      {/* <div className="w-full grid gap-4 py-4 p-2 ">
         <p className="w-full flex items-center">
           <span className="border-t w-full" />
           <span className="mx-2">or</span>
@@ -133,7 +133,7 @@ export const SignUp = () => {
           />
           <p className="mx-auto">Sign up with Google</p>
         </Button>
-      </div>
+      </div> */}
     </AuthForm>
   );
 };
