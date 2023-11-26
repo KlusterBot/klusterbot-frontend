@@ -33,7 +33,7 @@ export const Login = () => {
             console.log({ data });
             toast.success("Login successful.");
             setLoading(false);
-            !data.verified ? navigate("/setup") : navigate("/dashboard");
+            !data.data?.verified ? navigate("/setup") : navigate("/dashboard");
           }
         } catch (error) {
           setLoading(false);

@@ -7,7 +7,7 @@ export const Chat = () => {
         <div className="flex flex-col gap-6 h-full">
             <h2>Chats</h2>
             <iframe
-                className="w-full h-[500px]"
+                className="w-full h-[70vh]"
                 title="chat"
                 src={CHATBOT + "/?token=" + token}
             ></iframe>
