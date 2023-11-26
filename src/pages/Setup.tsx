@@ -1,24 +1,30 @@
 import SetupForm from "../components/templates/SetupForm";
 import Button from "../UI/Button";
+import { ImAttachment } from "react-icons/im";
 import { motion } from "framer-motion";
 import { IoCopyOutline } from "react-icons/io5";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import React from "react";
 import { Navigate, useNavigate } from "react-router";
 import { getToken } from "@/lib/services/localStorageServices";
 import { useSetupBotMutation } from "@/store/services/api/setup";
-import { useAppDispatch, useAppSelector } from "@/store/hooks/hooks";
-import { setNewUserToFalse } from "@/store/features/newUserSlice";
+import { useAppSelector } from "@/store/hooks/hooks";
 import { ClipLoader } from "react-spinners";
-// import toast from "react-hot-toast";
+import toast from "react-hot-toast";
+import { jwtDecode } from "jwt-decode";
+
 
 const Setup = () => {
+  const formDetailsInitState = {
+    document: "",
+    company: "",
+    website: "",
+  };
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const [step, setStep] = useState(1);
-  const isNewUser = useAppSelector((state) => state.isNewUser);
+  const isVerified = useAppSelector((state) => state.isVerified);
   const [setupBot, { isLoading, isError }] = useSetupBotMutation();
-  const [formDetails, setFormDetails] = useState<setupBotDetails>();
+  const [formDetails, setFormDetails] = useState(formDetailsInitState);
 
   const inputClass =
     "border-solid rounded-lg border-[1px] border-dark-blue-color p-2 outline-none";
@@ -35,7 +41,6 @@ const Setup = () => {
 
   const goToDashboard = () => {
     navigate("/dashboard");
-    dispatch(setNewUserToFalse());
   };
 
   const formInputHandler = (
@@ -55,18 +60,47 @@ const Setup = () => {
     event.preventDefault();
     if (!formDetails || isLoading) return;
     try {
-      const data = await setupBot(formDetails);
+      const data = await setupBot(formDetails).unwrap();
       console.log(data);
+      setFormDetails(formDetailsInitState);
+      toast.success(data.message);
       goToNextStep();
     } catch (error: any) {
       console.log(error);
     }
   };
+  const user = token && jwtDecode(token);
+  // @ts-ignore
+  const user_id = user?.["id"];
 
-  return token && !isNewUser ? (
-    <Navigate to="/dashboard/settings" replace />
+  const copyToClipboard = () => {
+    const code = document.getElementById("code");
+    if (code) navigator.clipboard.writeText(code.textContent || "");
+    toast.success("Copied to clipboard");
+  };
+
+  const scanDocument = async (event: ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.type);
+    const file = event?.target?.files?.[0];
+    if (file) {
+      // const uri = URL.createObjectURL(file);
+      // const pages = ;
+      // let extractedText = "";
+
+      // for (const page of pages) {
+      //   const textContent = await page.getTextContent();
+      //   const pageText = textContent.items
+      //     .map((item: any) => item.str)
+      //     .join(" ");
+      //   extractedText += pageText;
+      // }
+    }
+  };
+
+  return token && isVerified ? (
+    <Navigate to="/dashboard" replace />
   ) : !token ? (
-    <Navigate to="/signup" replace />
+    <Navigate to="/login" replace />
   ) : (
     <div className="w-screen h-screen overflow-hidden bg-white">
       <motion.div
@@ -89,12 +123,12 @@ const Setup = () => {
                 Set-up your Bot
               </h1>
               <div className={`${inputContainerClass}`}>
-                <label htmlFor="name" className="">
+                <label htmlFor="company" className="">
                   Enter Company name
                 </label>
                 <input
                   type="text"
-                  name="name"
+                  name="company"
                   required
                   onChange={formInputHandler}
                   value={formDetails?.company}
@@ -114,7 +148,7 @@ const Setup = () => {
                   className={`${inputClass}`}
                 />
               </div>
-              <div className={`${inputContainerClass}`}>
+              <div className={`${inputContainerClass} relative`}>
                 <label htmlFor="about">About Company</label>
                 <textarea
                   placeholder="Tell us about your company to enable us serve you better."
@@ -126,6 +160,20 @@ const Setup = () => {
                   onChange={formInputHandler}
                   className={`${inputClass} min-h-[5rem]`}
                 ></textarea>
+                <button
+                  type="button"
+                  className="absolute right-[2.2rem] top-[2.5rem] cursor-pointer"
+                >
+                  <span className="absolute p-2 scale-[1.1] bg-white">
+                    <ImAttachment />
+                  </span>
+                  <input
+                    type="file"
+                    accept="application/pdf"
+                    className="absolute opacity-0 w-8"
+                    onChange={scanDocument}
+                  />
+                </button>
               </div>
 
               {isLoading ? (
@@ -156,19 +204,26 @@ const Setup = () => {
                 </p>
               </div>
               <p className="text-sm">
-                Paste this code just before the {"</header>"} tag of your site
-                code
+                Paste this code just in the {"</head>"} tag of your site code
               </p>
               <div className={`${inputContainerClass}`}>
                 <label htmlFor="name" className="">
                   Code
                 </label>
-                <p
+                <code
                   placeholder="Klustermann"
-                  className={`${inputClass} h-10`}
-                ></p>
+                  className={`${inputClass} h-max font-bold text-black`}
+                  id="code"
+                >
+                  {`<script
+                    src="https://api.kluster-ai.online/api/me/embed/${user_id}/kluster.js
+                  ></script>`}
+                </code>
               </div>
-              <button className="bg-[#dce1f5] p-2 px-4 rounded-[2rem] text-dark-blue-color flex items-center justify-center gap-4">
+              <button
+                className="bg-[#dce1f5] p-2 px-4 rounded-[2rem] text-dark-blue-color flex items-center justify-center gap-4"
+                onClick={copyToClipboard}
+              >
                 <IoCopyOutline />
                 Copy to clipboard
               </button>

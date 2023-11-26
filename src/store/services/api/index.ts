@@ -5,14 +5,14 @@ import {
   fetchBaseQuery,
 } from "@reduxjs/toolkit/query/react";
 import { toast } from "react-hot-toast";
-import {} from "react-router";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: import.meta.env.VITE_REACT_APP_BASE_URL,
   prepareHeaders: (headers) => {
     const token = getToken();
+    console.log(token);
     if (token) {
-      headers.set("Authorization", `${token}`);
+      headers.set("Authorization", `Bearer ${token}`);
     }
     headers.set("accept", "application/json");
     return headers;

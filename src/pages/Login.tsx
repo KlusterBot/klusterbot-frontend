@@ -7,7 +7,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { login } from "../lib/services";
 import toast from "react-hot-toast";
 import { getError } from "../lib/utils";
-import { useAppSelector } from "@/store/hooks/hooks";
 
 const initialValues = {
   email: "",
@@ -18,7 +17,6 @@ export const Login = () => {
   // const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const isNewUser = useAppSelector((state) => state.isNewUser);
 
   const { handleBlur, handleSubmit, handleChange, values, touched, errors } =
     useFormik({
@@ -32,10 +30,10 @@ export const Login = () => {
             throw new Error(error);
           }
           if (data) {
-            // console.log({ data });
+            console.log({ data });
             toast.success("Login successful.");
             setLoading(false);
-            isNewUser ? navigate("/setup") : navigate("/dashboard");
+            !data.verified ? navigate("/setup") : navigate("/dashboard");
           }
         } catch (error) {
           setLoading(false);
@@ -82,7 +80,7 @@ export const Login = () => {
         </Link>
       </div>
 
-      <div className="w-full grid gap-4 py-4 p-2 ">
+      {/* <div className="w-full grid gap-4 py-4 p-2 ">
         <p className="w-full flex items-center">
           <span className="border-t w-full" />
           <span className="mx-2">or</span>
@@ -95,7 +93,7 @@ export const Login = () => {
           />
           <p className="mx-auto">Sign in with Google</p>
         </Button>
-      </div>
+      </div> */}
     </AuthForm>
   );
 };

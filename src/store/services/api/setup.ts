@@ -8,7 +8,7 @@ const setupApi = api.injectEndpoints({
       query: (args: setupBotDetails) => ({
         url: "/ai/add",
         method: "POST",
-        params: args,
+        body: args,
       }),
     }),
   }),
