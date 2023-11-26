@@ -48,8 +48,6 @@ export const Playground = () => {
 
             const data = response?.data;
 
-            console.log(data);
-
             toast.success(data.message);
 
             setLoading(false);
@@ -91,11 +89,12 @@ export const Playground = () => {
         <div>
             <h1>Playground</h1>
             <div className="flex items-center">
-                <div className="kluster-chatbot">
+                <div className="kluster-chatbot" onClick={() => {}}>
                     <DeviceFrameset zoom={0.7} device="iPhone 8" color="black">
                         <iframe
                             title="chatbot"
                             src={frameUrl}
+                            sandbox="allow-same-origin"
                             className="w-full h-full"
                         ></iframe>
                     </DeviceFrameset>
