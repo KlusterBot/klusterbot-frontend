@@ -94,7 +94,7 @@ export const Playground = () => {
                         <iframe
                             title="chatbot"
                             src={frameUrl}
-                            sandbox="allow-same-origin"
+                            sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
                             className="w-full h-full"
                         ></iframe>
                     </DeviceFrameset>
