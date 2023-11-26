@@ -12,10 +12,7 @@ import { useAppSelector } from "@/store/hooks/hooks";
 import { ClipLoader } from "react-spinners";
 import toast from "react-hot-toast";
 import { jwtDecode } from "jwt-decode";
-import { getDocument } from "pdfjs-dist";
 
-// pdfjs.GlobalWorkerOptions.workerSrc =
-//   "../../../node_modules/pdfjs-dist/build/pdf.worker.mjs";
 
 const Setup = () => {
   const formDetailsInitState = {
@@ -86,11 +83,7 @@ const Setup = () => {
     console.log(event.target.type);
     const file = event?.target?.files?.[0];
     if (file) {
-      const uri = URL.createObjectURL(file);
-      const pdf = await getDocument(uri).promise;
-      const pages = pdf.numPages;
-
-      console.log(pages);
+      // const uri = URL.createObjectURL(file);
       // const pages = ;
       // let extractedText = "";
 
