@@ -18,11 +18,15 @@ html {
 }
 
 body {
-  font-family: "Noto Sans", sans-serif;
   position: relative;
+  font-family: "Noto Sans", sans-serif;
   max-width: 1920px;
   margin: 0 auto;
   min-height: 100vh;
+}
+
+body:has(.mobile-nav) {
+  overflow: hidden;
 }
 /* body::-webkit-scrollbar {
 } */
@@ -33,6 +37,12 @@ body {
 }
 
 .hero-section {
-  height: calc(100svh - 5.7rem);
-  max-height: 45rem;
+  min-height: calc(100svh - 5.7rem);
+  /* max-height: 45rem; */
 }
+
+/* @media (max-width:640px) {
+ .hero-section {
+  min-height: 60vh;
+ }
+} */
