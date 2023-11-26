@@ -13,7 +13,6 @@ import { ClipLoader } from "react-spinners";
 import toast from "react-hot-toast";
 import { jwtDecode } from "jwt-decode";
 
-
 const Setup = () => {
   const formDetailsInitState = {
     document: "",
@@ -81,19 +80,22 @@ const Setup = () => {
 
   const scanDocument = async (event: ChangeEvent<HTMLInputElement>) => {
     console.log(event.target.type);
+    var texttype = /text.*/;
     const file = event?.target?.files?.[0];
+    const reader = new FileReader();
     if (file) {
-      // const uri = URL.createObjectURL(file);
-      // const pages = ;
-      // let extractedText = "";
-
-      // for (const page of pages) {
-      //   const textContent = await page.getTextContent();
-      //   const pageText = textContent.items
-      //     .map((item: any) => item.str)
-      //     .join(" ");
-      //   extractedText += pageText;
-      // }
+      if (!file.type.match(texttype)) {
+        toast.error("File type not allowed");
+        return;
+      }
+      reader.onloadend = async (res) => {
+        const data = res?.target?.result?.toString();
+        const string = data?.replace(/^\s*[\r\n]/gm, "");
+        let array = string?.split(new RegExp(/[\r\n]/gm));
+        const document = array?.join("\n");
+        if (document) setFormDetails((prev) => ({ ...prev, document }));
+      };
+      reader.readAsText(file);
     }
   };
 
@@ -158,27 +160,30 @@ const Setup = () => {
                   rows={4}
                   value={formDetails?.document}
                   onChange={formInputHandler}
-                  className={`${inputClass} min-h-[5rem]`}
+                  className={`${inputClass} min-h-[5rem] pr-9`}
                 ></textarea>
                 <button
                   type="button"
-                  className="absolute right-[2.2rem] top-[2.5rem] cursor-pointer"
+                  className="absolute right-[2.2rem] top-[2.29rem] cursor-none"
                 >
-                  <span className="absolute p-2 scale-[1.1] bg-white">
+                  <span className="absolute p-2 scale-[1.1] bg-white rounded-lg">
                     <ImAttachment />
                   </span>
                   <input
                     type="file"
-                    accept="application/pdf"
-                    className="absolute opacity-0 w-8"
+                    accept="*/txt"
+                    className="absolute opacity-0 w-8 !cursor-pointer"
                     onChange={scanDocument}
                   />
                 </button>
+                <p className="font-bold text-[.7rem] text-center">
+                  You can only submit txt files
+                </p>
               </div>
 
               {isLoading ? (
-                <button className="w-40 border-[.1rem] border-black flex items-center justify-center gap-2 rounded-[5rem] border-solid p-3 cursor-pointer text-lg">
-                  <ClipLoader color="#153ABA" />
+                <button className="w-44 border-[.1rem] border-black flex items-center justify-center gap-2 rounded-[5rem] border-solid p-2.5 cursor-pointer text-lg bg-dark-blue-color">
+                  <ClipLoader color="#fff" />
                 </button>
               ) : (
                 <Button className="mt-10" buttonText={"Continue"} />
