@@ -10,9 +10,14 @@ import clsx from "clsx";
 import Button from "../UI/Button";
 import Container from "../components/Container";
 import Carousel from "../components/Carousel";
+import { useAppSelector } from "@/store/hooks/hooks";
+import { getToken } from "@/lib/services/localStorageServices";
 
 export const Home = () => {
-  const h2Classes = "font-bold sm:text-[2.4rem] text-darker-color text-[1.3rem]";
+  const token = getToken();
+  const isVerified = useAppSelector((state) => state.isVerified);
+  const h2Classes =
+    "font-bold sm:text-[2.4rem] text-darker-color text-[1.3rem]";
   const h4Classes = "font-bold sm:text-xl text-darker-color mb-2";
 
   return (
@@ -48,7 +53,9 @@ export const Home = () => {
                 </p>
               </div>
             </div>
-            <Button buttonText="Get Started" bordered />
+            {!token && !isVerified && (
+              <Button buttonText="Get Started" bordered />
+            )}
           </div>
           <img src={chat} alt="" className="w-[45%] md:block hidden" />
         </div>
@@ -144,4 +151,3 @@ export const Home = () => {
     </div>
   );
 };
-

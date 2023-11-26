@@ -7,8 +7,6 @@ import { useFormik } from "formik";
 import { signUpValidationSchema } from "../lib/utils/validationUtils";
 import { signUp } from "../lib/services";
 import { getError } from "../lib/utils";
-import { useAppDispatch } from "@/store/hooks/hooks";
-import { setNewUserToTrue } from "@/store/features/newUserSlice";
 
 const initialValues = {
   name: "",
@@ -22,7 +20,6 @@ export const SignUp = () => {
   const [loading, setLoading] = useState(false);
   // const router = useRo
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
 
   const {
     handleBlur,
@@ -45,11 +42,10 @@ export const SignUp = () => {
           throw new Error(error);
         }
         console.log({ data });
-        toast.success("Sign up successful. Login to continue!");
+        toast.success("Sign up successful. Set up bot to continue!");
         setLoading(false);
         resetForm();
-        dispatch(setNewUserToTrue());
-        navigate("/login");
+        navigate("/setup");
       } catch (error) {
         setLoading(false);
         toast.error(getError(error));
@@ -124,7 +120,7 @@ export const SignUp = () => {
         </Link>
       </div>
 
-      <div className="w-full grid gap-4 py-4 p-2 ">
+      {/* <div className="w-full grid gap-4 py-4 p-2 ">
         <p className="w-full flex items-center">
           <span className="border-t w-full" />
           <span className="mx-2">or</span>
@@ -137,7 +133,7 @@ export const SignUp = () => {
           />
           <p className="mx-auto">Sign up with Google</p>
         </Button>
-      </div>
+      </div> */}
     </AuthForm>
   );
 };

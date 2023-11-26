@@ -1,13 +1,12 @@
 import { api } from "./services/api";
 import { configureStore } from "@reduxjs/toolkit";
-import isNewUserReducer from "./features/newUserSlice";
+import isVerifiedReducer from "./features/verifiedSlice";
 
 const store = configureStore({
   reducer: {
     [api.reducerPath]: api.reducer,
-    isNewUser: isNewUserReducer,
+    isVerified: isVerifiedReducer,
   },
-
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(api.middleware),
 });
