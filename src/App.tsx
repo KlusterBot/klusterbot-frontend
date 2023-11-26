@@ -1,10 +1,10 @@
 import "./App.css";
-
 import { motion, AnimatePresence } from "framer-motion";
 import { Toaster } from "react-hot-toast";
-
-import { AppRoutes } from "./components";
 import { useLocation } from "react-router";
+import { Provider } from "react-redux";
+import store from "./store/store";
+import { AppRoutes } from "./components";
 
 const variants = {
   hidden: { opacity: 0, x: -200, y: 0 },
@@ -12,10 +12,11 @@ const variants = {
   exit: { opacity: 0, x: 0, y: -100 },
 };
 
+
 function App() {
   const { pathname } = useLocation();
   return (
-    <>
+    <Provider store={store}>
       <motion.main
         id="main"
         key={pathname}
@@ -34,7 +35,7 @@ function App() {
         </AnimatePresence>
         <Toaster />
       </motion.main>
-    </>
+    </Provider>
   );
 }
 

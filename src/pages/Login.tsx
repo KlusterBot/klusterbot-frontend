@@ -35,7 +35,7 @@ export const Login = () => {
             console.log({ data });
             toast.success("Login successful.");
             setLoading(false);
-            navigate("/dashboard");
+            !data.data?.verified ? navigate("/setup") : navigate("/dashboard");
           }
         } catch (error) {
           setLoading(false);
@@ -82,7 +82,7 @@ export const Login = () => {
         </Link>
       </div>
 
-      <div className="w-full grid gap-4 py-4 p-2 ">
+      {/* <div className="w-full grid gap-4 py-4 p-2 ">
         <p className="w-full flex items-center">
           <span className="border-t w-full" />
           <span className="mx-2">or</span>
@@ -95,7 +95,7 @@ export const Login = () => {
           />
           <p className="mx-auto">Sign in with Google</p>
         </Button>
-      </div>
+      </div> */}
     </AuthForm>
   );
 };

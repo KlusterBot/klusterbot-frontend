@@ -1,10 +1,12 @@
 /** @type {import('tailwindcss').Config} */
+import defaultTheme from "tailwindcss/defaultTheme";
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       fontFamily: {
         body: `'Noto Sans', sans-serif`,
+        galindo: ["'Galindo'", "sans-serif"],
       },
       backgroundColor: {
         "primary-dark-blue": "#153ABA",

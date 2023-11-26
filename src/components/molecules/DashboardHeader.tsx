@@ -4,7 +4,7 @@ import { Hamburger } from "../atoms";
 
 export const DashboardHeader = () => {
   return (
-    <div className="w-full bg-white z-10 sticky top-0 left-0 shadow-lg p-8 px-[MIN(100px,5%)] flex items-center border-b border-dark-blue-color">
+    <div className="w-full bg-white z-10 sticky top-0 left-0 shadow-lg py-5 px-[MIN(100px,5%)] flex items-center border-b border-dark-blue-color">
       <div className="md:flex-row-reverse md:ml-auto my-auto flex gap-4 items-center justify-between">
         <Link to={"/dashboard/settings"} className="flex items-center gap-3">
           <span className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 w-8 aspect-square object-cover rounded-full border" />

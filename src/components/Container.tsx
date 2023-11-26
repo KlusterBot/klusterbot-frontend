@@ -8,7 +8,7 @@ const Container = ({
   className?: string;
 }) => {
     return (
-        <div className={clsx(`main-container w-full ${className}`)}>{children}</div>
+        <div className={clsx(`main-container w-full ${className} md:px-10 px-6`)}>{children}</div>
   );
 };
 

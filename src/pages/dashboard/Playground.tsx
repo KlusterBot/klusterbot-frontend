@@ -1,7 +1,11 @@
+// import ChatBox from "@/components/ChatBox"
 
 
 export const Playground = () => {
   return (
-    <div>Playground</div>
+    <div>
+      Playgroundbox
+      {/* <ChatBox/> */}
+    </div>
   )
 }

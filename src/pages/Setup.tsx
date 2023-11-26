@@ -1,12 +1,34 @@
 import SetupForm from "../components/templates/SetupForm";
 import Button from "../UI/Button";
+import { ImAttachment } from "react-icons/im";
 import { motion } from "framer-motion";
 import { IoCopyOutline } from "react-icons/io5";
-import { useState } from "react";
-import { Navigate } from "react-router";
+import { ChangeEvent, useState } from "react";
+import React from "react";
+import { useNavigate } from "react-router";
+import { getToken } from "@/lib/services/localStorageServices";
+import { useSetupBotMutation } from "@/store/services/api/setup";
+import { ClipLoader } from "react-spinners";
+import toast from "react-hot-toast";
+import { jwtDecode } from "jwt-decode";
 
-export const Setup = () => {
+const Setup = () => {
+  const formDetailsInitState = {
+    document: "",
+    company: "",
+    website: "",
+  };
+  const navigate = useNavigate();
   const [step, setStep] = useState(1);
+  const [setupBot, { isLoading, isError }] = useSetupBotMutation();
+  const [formDetails, setFormDetails] = useState(formDetailsInitState);
+
+  const inputClass =
+    "border-solid rounded-lg border-[1px] border-dark-blue-color p-2 outline-none";
+  const inputContainerClass = "flex flex-col gap-2.5 text-gray-500 w-[60%]";
+
+  const token = getToken();
+
   const goToNextStep = () => {
     setStep((prev) => prev + 1);
   };
@@ -14,13 +36,65 @@ export const Setup = () => {
     setStep((prev) => prev - 1);
   };
 
-  const inputClass =
-    "border-solid rounded-lg border-[1px] border-dark-blue-color p-2 outline-none";
-  const inputContainerClass = "flex flex-col gap-2.5 text-gray-500 w-[60%]";
+  const goToDashboard = () => {
+    navigate("/dashboard");
+  };
 
-  const submitFormHandler = (event: React.FormEvent<HTMLFormElement>) => {
+  const formInputHandler = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     event.preventDefault();
-    goToNextStep();
+    console.log(isError);
+    const input = event.target.name;
+    const value = event.target.value;
+    console.log();
+    // @ts-ignore
+    setFormDetails((prev) => ({ ...prev, [input]: value }));
+  };
+
+  console.log(formDetails);
+  const submitFormHandler = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!formDetails || isLoading) return;
+    try {
+      const data = await setupBot(formDetails).unwrap();
+      console.log(data);
+      setFormDetails(formDetailsInitState);
+      toast.success(data.message);
+      goToNextStep();
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+  const user = token && jwtDecode(token);
+  // @ts-ignore
+  const user_id = user?.["id"];
+
+  const copyToClipboard = () => {
+    const code = document.getElementById("code");
+    if (code) navigator.clipboard.writeText(code.textContent || "");
+    toast.success("Copied to clipboard");
+  };
+
+  const scanDocument = async (event: ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.type);
+    var texttype = /text.*/;
+    const file = event?.target?.files?.[0];
+    const reader = new FileReader();
+    if (file) {
+      if (!file.type.match(texttype)) {
+        toast.error("File type not allowed");
+        return;
+      }
+      reader.onloadend = async (res) => {
+        const data = res?.target?.result?.toString();
+        const string = data?.replace(/^\s*[\r\n]/gm, "");
+        let array = string?.split(new RegExp(/[\r\n]/gm));
+        const document = array?.join("\n");
+        if (document) setFormDetails((prev) => ({ ...prev, document }));
+      };
+      reader.readAsText(file);
+    }
   };
 
   const isSetupComplete = false;
@@ -30,14 +104,14 @@ export const Setup = () => {
   }
 
   return (
-    <div className="w-screen h-screen overflow-hidden">
+    <div className="w-screen h-screen overflow-hidden bg-white">
       <motion.div
-        className="flex h-full w-full"
+        className="flex h-full w-full "
         animate={{ x: `${-(step - 1) * 100}%` }}
         transition={{ duration: 0.5 }}
       >
         <SetupForm className="inline-block">
-          <div className="flex flex-col items-center justify-center md:w-[70%] w-full mx-auto pt-12 gap-12 h-full">
+          <div className="flex flex-col items-center justify-center md:w-[70%] w-full mx-auto pt-12 gap-12 h-full bg-white z-10 relative">
             <div className="flex items-center justify-center gap-1 font-semibold">
               <p className="px-3">Step {step} of 2 </p>
               <span className="w-3 h-3 bg-dark-blue-color rounded-full"></span>
@@ -51,14 +125,16 @@ export const Setup = () => {
                 Set-up your Bot
               </h1>
               <div className={`${inputContainerClass}`}>
-                <label htmlFor="name" className="">
+                <label htmlFor="company" className="">
                   Enter Company name
                 </label>
                 <input
                   type="text"
-                  name="name"
+                  name="company"
                   required
-                  placeholder="Klustermann"
+                  onChange={formInputHandler}
+                  value={formDetails?.company}
+                  placeholder="Example company"
                   className={`${inputClass}`}
                 />
               </div>
@@ -67,25 +143,56 @@ export const Setup = () => {
                 <input
                   type="url"
                   name="website"
+                  onChange={formInputHandler}
+                  value={formDetails?.website}
+                  placeholder="https://www.example.com"
                   required
                   className={`${inputClass}`}
                 />
               </div>
-              <div className={`${inputContainerClass}`}>
+              <div className={`${inputContainerClass} relative`}>
                 <label htmlFor="about">About Company</label>
                 <textarea
+                  placeholder="Tell us about your company to enable us serve you better."
                   required
-                  name="about"
+                  name="document"
+                  minLength={50}
                   rows={4}
-                  className={`${inputClass} min-h-[5rem]`}
+                  value={formDetails?.document}
+                  onChange={formInputHandler}
+                  className={`${inputClass} min-h-[5rem] pr-9`}
                 ></textarea>
+                <button
+                  type="button"
+                  className="absolute right-[2.2rem] top-[2.29rem] cursor-none"
+                >
+                  <span className="absolute p-2 scale-[1.1] bg-white rounded-lg">
+                    <ImAttachment />
+                  </span>
+                  <input
+                    type="file"
+                    accept="*/txt"
+                    className="absolute opacity-0 w-8 !cursor-pointer"
+                    onChange={scanDocument}
+                  />
+                </button>
+                <p className="font-bold text-[.7rem] text-center">
+                  You can only submit txt files
+                </p>
               </div>
-              <Button className="mt-10" buttonText="Continue" />
+
+              {isLoading ? (
+                <button className="w-44 border-[.1rem] border-black flex items-center justify-center gap-2 rounded-[5rem] border-solid p-2.5 cursor-pointer text-lg bg-dark-blue-color">
+                  <ClipLoader color="#fff" />
+                </button>
+              ) : (
+                <Button className="mt-10" buttonText={"Continue"} />
+              )}
             </form>
           </div>
         </SetupForm>
         <SetupForm className="inline-block">
-          <div className="flex flex-col items-center justify-center md:w-[70%] w-full mx-auto pt-12 gap-12 h-full">
+          <div className="flex flex-col items-center justify-center md:w-[70%] w-full mx-auto pt-12 gap-12 h-full bg-white z-10 relative">
             <div className="flex items-center justify-center gap-1 font-semibold">
               <p className="px-3">Step {step} of 2 </p>
               <span className="w-3 h-3 bg-dark-blue-color rounded-full"></span>
@@ -102,19 +209,26 @@ export const Setup = () => {
                 </p>
               </div>
               <p className="text-sm">
-                Paste this code just before the {"</body>"} tag of your site
-                code
+                Paste this code just in the {"</head>"} tag of your site code
               </p>
               <div className={`${inputContainerClass}`}>
                 <label htmlFor="name" className="">
                   Code
                 </label>
-                <p
+                <code
                   placeholder="Klustermann"
-                  className={`${inputClass} h-10`}
-                ></p>
+                  className={`${inputClass} h-max font-bold text-black`}
+                  id="code"
+                >
+                  {`<script
+                    src="https://api.kluster-ai.online/api/me/embed/${user_id}/kluster.js
+                  ></script>`}
+                </code>
               </div>
-              <button className="bg-[#dce1f5] p-2 px-4 rounded-[2rem] text-dark-blue-color flex items-center justify-center gap-4">
+              <button
+                className="bg-[#dce1f5] p-2 px-4 rounded-[2rem] text-dark-blue-color flex items-center justify-center gap-4"
+                onClick={copyToClipboard}
+              >
                 <IoCopyOutline />
                 Copy to clipboard
               </button>
@@ -127,7 +241,7 @@ export const Setup = () => {
                 className="!py-[.5rem] w-44"
               />
               <Button
-                onClick={goToNextStep}
+                onClick={goToDashboard}
                 buttonText="Continue"
                 className="!py-[.2rem] w-44"
               />

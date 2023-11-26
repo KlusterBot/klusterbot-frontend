@@ -4,9 +4,9 @@ import { NavProvider } from "@/context/nav_context";
 import { Navigate } from "react-router";
 
 export const DashboardLayout = ({
-  children,
+    children,
 }: {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }) => {
 
 
