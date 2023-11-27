@@ -90,7 +90,7 @@ export const Playground = () => {
     return (
         <div>
             <h1>Playground</h1>
-            <div className="flex items-center">
+            <div className="flex items-center flex-col md:flex-row">
                 <div className="kluster-chatbot" onClick={() => {}}>
                     <DeviceFrameset zoom={0.7} device="iPhone 8" color="black">
                         <iframe
