@@ -91,7 +91,7 @@ export const Playground = () => {
         <div>
             <h1>Playground</h1>
             <div className="flex items-center flex-col md:flex-row">
-                <DeviceFrameset zoom={0.9} device="iPhone 8" color="black">
+                <DeviceFrameset zoom={0.9} device="iPhone 5c" color="white">
                     <iframe
                         title="chatbot"
                         src={frameUrl}
