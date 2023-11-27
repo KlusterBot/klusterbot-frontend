@@ -8,7 +8,6 @@ export const AuthLayout = ({ children }: { children: React.ReactNode }) => {
       <nav className="flex w-full sticky top-0 left-0 z-20 bg-white shadow-sm">
         <div className="w-full flex p-[5%] py-[MAX(32px,3%)] relative">
           <Logo />
-
           <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 w-full mx-auto text-center grid gap-3">
             <h1 className="text-4xl font-bold text-dark-blue-color">
               {pathname.includes("login")

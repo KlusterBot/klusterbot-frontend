@@ -9,10 +9,10 @@ import { signUp } from "../lib/services";
 import { getError } from "../lib/utils";
 
 const initialValues = {
-  name: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
 };
 
 export const SignUp = () => {
@@ -21,37 +21,36 @@ export const SignUp = () => {
   // const router = useRo
   const navigate = useNavigate();
 
-  const {
-    handleBlur,
-    handleSubmit,
-    resetForm,
-    handleReset,
-    handleChange,
-    values,
-    touched,
-    errors,
-  } = useFormik({
-    initialValues,
-    validationSchema: signUpValidationSchema,
-    onSubmit: async () => {
-      // setError('')
-      setLoading(true);
-      try {
-        const { data, error } = await signUp(values);
-        if (error) {
-          throw new Error(error);
-        }
-        toast.success("Sign up successful. Set up bot to continue!");
-        setLoading(false);
-        resetForm();
-        navigate("/setup");
-      } catch (error) {
-        setLoading(false);
-        toast.error(getError(error));
-        // setError(getError(error));
-      }
-    },
-  });
+    const {
+        handleBlur,
+        handleSubmit,
+        resetForm,
+        handleReset,
+        handleChange,
+        values,
+        touched,
+        errors,
+    } = useFormik({
+        initialValues,
+        validationSchema: signUpValidationSchema,
+        onSubmit: async () => {
+            setLoading(true);
+            try {
+                const { data, error } = await signUp(values);
+                if (error) {
+                    throw new Error(error);
+                }
+                localStorage.setItem("user", JSON.stringify(data.data));
+                toast.success("Sign up successful. Set up bot to continue!");
+                setLoading(false);
+                resetForm();
+                navigate("/setup");
+            } catch (error) {
+                setLoading(false);
+                toast.error(getError(error));
+            }
+        },
+    });
 
   return (
     <AuthForm onSubmit={handleSubmit} onReset={handleReset}>

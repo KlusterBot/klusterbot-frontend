@@ -23,22 +23,22 @@ const Setup = () => {
   const [setupBot, { isLoading, isError }] = useSetupBotMutation();
   const [formDetails, setFormDetails] = useState(formDetailsInitState);
 
-  const inputClass =
-    "border-solid rounded-lg border-[1px] border-dark-blue-color p-2 outline-none";
-  const inputContainerClass = "flex flex-col gap-2.5 text-gray-500 w-[60%]";
+    const inputClass =
+        "border-solid rounded-lg border-[1px] border-dark-blue-color p-2 outline-none";
+    const inputContainerClass = "flex flex-col gap-2.5 text-gray-500 w-[60%]";
 
-  const token = getToken();
+    const token = getToken();
 
-  const goToNextStep = () => {
-    setStep((prev) => prev + 1);
-  };
-  const goToPrevStep = () => {
-    setStep((prev) => prev - 1);
-  };
+    const goToNextStep = () => {
+        setStep((prev) => prev + 1);
+    };
+    const goToPrevStep = () => {
+        setStep((prev) => prev - 1);
+    };
 
-  const goToDashboard = () => {
-    navigate("/dashboard");
-  };
+    const goToDashboard = () => {
+        navigate("/dashboard");
+    };
 
   const formInputHandler = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -65,31 +65,31 @@ const Setup = () => {
   // @ts-ignore
   const user_id = user?.["id"];
 
-  const copyToClipboard = () => {
-    const code = document.getElementById("code");
-    if (code) navigator.clipboard.writeText(code.textContent || "");
-    toast.success("Copied to clipboard");
-  };
+    const copyToClipboard = () => {
+        const code = document.getElementById("code");
+        if (code) navigator.clipboard.writeText(code.textContent || "");
+        toast.success("Copied to clipboard");
+    };
 
-  const scanDocument = async (event: ChangeEvent<HTMLInputElement>) => {
-    var texttype = /text.*/;
-    const file = event?.target?.files?.[0];
-    const reader = new FileReader();
-    if (file) {
-      if (!file.type.match(texttype)) {
-        toast.error("File type not allowed");
-        return;
-      }
-      reader.onloadend = async (res) => {
-        const data = res?.target?.result?.toString();
-        const string = data?.replace(/^\s*[\r\n]/gm, "");
-        let array = string?.split(new RegExp(/[\r\n]/gm));
-        const document = array?.join("\n");
-        if (document) setFormDetails((prev) => ({ ...prev, document }));
-      };
-      reader.readAsText(file);
-    }
-  };
+    const scanDocument = async (event: ChangeEvent<HTMLInputElement>) => {
+        const texttype = /text.*/;
+        const file = event?.target?.files?.[0];
+        const reader = new FileReader();
+        if (file) {
+            if (!file.type.match(texttype)) {
+                toast.error("File type not allowed");
+                return;
+            }
+            reader.onloadend = async (res) => {
+                const data = res?.target?.result?.toString();
+                const string = data?.replace(/^\s*[\r\n]/gm, "");
+                const array = string?.split(new RegExp(/[\r\n]/gm));
+                const document = array?.join("\n");
+                if (document) setFormDetails((prev) => ({ ...prev, document }));
+            };
+            reader.readAsText(file);
+        }
+    };
 
   return (
     <div className="w-screen h-screen overflow-hidden bg-white">
@@ -240,5 +240,3 @@ const Setup = () => {
     </div>
   );
 };
-
-export default Setup;

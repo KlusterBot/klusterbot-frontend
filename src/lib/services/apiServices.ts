@@ -15,9 +15,9 @@ export const login = async (form: { email: string; password: string }) => {
 };
 
 export const signUp = async (form: {
-  name: string;
-  email: string;
-  password: string;
+    name: string;
+    email: string;
+    password: string;
 }) => {
   try {
     const response = await baseUrl.post("/auth/register", form);
