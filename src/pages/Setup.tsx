@@ -12,7 +12,7 @@ import { ClipLoader } from "react-spinners";
 import toast from "react-hot-toast";
 import { jwtDecode } from "jwt-decode";
 
-const Setup = () => {
+export const Setup = () => {
   const formDetailsInitState = {
     document: "",
     company: "",
@@ -247,3 +247,4 @@ const Setup = () => {
     </div>
   );
 };
+
