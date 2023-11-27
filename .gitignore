@@ -27,3 +27,4 @@ dist-ssr
 .env
 bun.lockb
 .gitignore
+yarn.lock
