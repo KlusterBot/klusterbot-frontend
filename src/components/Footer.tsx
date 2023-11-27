@@ -36,7 +36,7 @@ const Footer = () => {
         <div className={footerItemClass}>
           <h3 className={headerClass}>Contact us</h3>
           <p>+234709000000</p>
-          <a href="mailto:someone@example.com">contact@kluster.com</a>
+          <a href="mailto:someone@example.com">kluster-ai.online</a>
           <div className="flex gap-4 text-2xl">
             <FaFacebook />
             <FaInstagram />
