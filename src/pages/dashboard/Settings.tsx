@@ -25,8 +25,6 @@ export const Settings = () => {
             if (data.success) {
                 setForm(data.data);
             }
-
-            console.log(data);
         } catch (error) {
             toast.error(getError(error));
         }

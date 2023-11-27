@@ -44,15 +44,12 @@ export const Setup = () => {
         event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
         event.preventDefault();
-        console.log(isError);
         const input = event.target.name;
         const value = event.target.value;
-        console.log();
         // @ts-ignore
         setFormDetails((prev) => ({ ...prev, [input]: value }));
     };
 
-    console.log(formDetails);
     const submitFormHandler = async (
         event: React.FormEvent<HTMLFormElement>
     ) => {
@@ -60,7 +57,6 @@ export const Setup = () => {
         if (!formDetails || isLoading) return;
         try {
             const data = await setupBot(formDetails).unwrap();
-            console.log(data);
             setFormDetails(formDetailsInitState);
             toast.success(data.message);
             goToNextStep();
@@ -79,8 +75,7 @@ export const Setup = () => {
     };
 
     const scanDocument = async (event: ChangeEvent<HTMLInputElement>) => {
-        console.log(event.target.type);
-        var texttype = /text.*/;
+        const texttype = /text.*/;
         const file = event?.target?.files?.[0];
         const reader = new FileReader();
         if (file) {
@@ -91,7 +86,7 @@ export const Setup = () => {
             reader.onloadend = async (res) => {
                 const data = res?.target?.result?.toString();
                 const string = data?.replace(/^\s*[\r\n]/gm, "");
-                let array = string?.split(new RegExp(/[\r\n]/gm));
+                const array = string?.split(new RegExp(/[\r\n]/gm));
                 const document = array?.join("\n");
                 if (document) setFormDetails((prev) => ({ ...prev, document }));
             };
