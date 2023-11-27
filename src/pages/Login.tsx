@@ -30,7 +30,6 @@ export const Login = () => {
             throw new Error(error);
           }
           if (data) {
-            console.log({ data });
             toast.success("Login successful.");
             setLoading(false);
             !data.data?.verified ? navigate("/setup") : navigate("/dashboard");

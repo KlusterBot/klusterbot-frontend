@@ -12,7 +12,6 @@ export const DashboardHome = () => {
     isError,
     error,
   } = useGetStatsQuery(null);
-  console.log(statsData);
   if (!isLoading && isError)
     // @ts-ignore
     toast.error(error?.data?.message || "Something went wrong");

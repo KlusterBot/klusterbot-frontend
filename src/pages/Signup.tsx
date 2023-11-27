@@ -41,7 +41,6 @@ export const SignUp = () => {
         if (error) {
           throw new Error(error);
         }
-        console.log({ data });
         toast.success("Sign up successful. Set up bot to continue!");
         setLoading(false);
         resetForm();

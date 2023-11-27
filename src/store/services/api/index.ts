@@ -10,7 +10,6 @@ const baseQuery = fetchBaseQuery({
   baseUrl: import.meta.env.VITE_REACT_APP_BASE_URL,
   prepareHeaders: (headers) => {
     const token = getToken();
-    console.log(token);
     if (token) {
       headers.set("Authorization", `Bearer ${token}`);
     }

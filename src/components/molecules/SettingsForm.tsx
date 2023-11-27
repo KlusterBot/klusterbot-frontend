@@ -29,7 +29,6 @@ export const SettingsForm = () => {
 
       if (data.success) {
         setForm(data.data);
-        console.log(data);
       }
     } catch (error) {
       toast.error(getError(error));
@@ -41,9 +40,6 @@ export const SettingsForm = () => {
       setLoading(true);
       const response = await baseUrl.post("/me/update", form);
       const data = response?.data;
-
-      console.log(data);
-
       toast.success(data.message);
 
       setLoading(false);

@@ -44,26 +44,21 @@ const Setup = () => {
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     event.preventDefault();
-    console.log(isError);
     const input = event.target.name;
     const value = event.target.value;
-    console.log();
     // @ts-ignore
     setFormDetails((prev) => ({ ...prev, [input]: value }));
   };
 
-  console.log(formDetails);
   const submitFormHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!formDetails || isLoading) return;
     try {
       const data = await setupBot(formDetails).unwrap();
-      console.log(data);
       setFormDetails(formDetailsInitState);
       toast.success(data.message);
       goToNextStep();
     } catch (error: any) {
-      console.log(error);
     }
   };
   const user = token && jwtDecode(token);
@@ -77,7 +72,6 @@ const Setup = () => {
   };
 
   const scanDocument = async (event: ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.type);
     var texttype = /text.*/;
     const file = event?.target?.files?.[0];
     const reader = new FileReader();
