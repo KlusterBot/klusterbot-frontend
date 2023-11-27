@@ -9,7 +9,7 @@ import { IoCheckmarkDone, IoCopyOutline } from "react-icons/io5";
 export const SettingsForm = () => {
     const token = getToken();
     const user = token && jwtDecode(token);
-    // @ts-ignore
+    // @ts-expect-error err
     const user_id = user?.["id"];
     const [isCopied, setIsCopied] = useState(false);
     const [loading, setLoading] = useState(false);

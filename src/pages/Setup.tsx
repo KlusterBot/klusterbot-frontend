@@ -20,7 +20,7 @@ export const Setup = () => {
     };
     const navigate = useNavigate();
     const [step, setStep] = useState(1);
-    const [setupBot, { isLoading, isError }] = useSetupBotMutation();
+    const [setupBot, { isLoading }] = useSetupBotMutation();
     const [formDetails, setFormDetails] = useState(formDetailsInitState);
 
     const inputClass =
@@ -46,7 +46,6 @@ export const Setup = () => {
         event.preventDefault();
         const input = event.target.name;
         const value = event.target.value;
-        // @ts-ignore
         setFormDetails((prev) => ({ ...prev, [input]: value }));
     };
 
@@ -60,12 +59,12 @@ export const Setup = () => {
             setFormDetails(formDetailsInitState);
             toast.success(data.message);
             goToNextStep();
-        } catch (error: any) {
+        } catch (error) {
             console.log(error);
         }
     };
     const user = token && jwtDecode(token);
-    // @ts-ignore
+    // @ts-expect-error err
     const user_id = user?.["id"];
 
     const copyToClipboard = () => {
@@ -157,6 +156,7 @@ export const Setup = () => {
                                     className={`${inputClass} min-h-[5rem] pr-9`}
                                 ></textarea>
                                 <button
+                                    title="btn"
                                     type="button"
                                     className="absolute right-[2.2rem] top-[2.29rem] cursor-none"
                                 >
@@ -164,6 +164,7 @@ export const Setup = () => {
                                         <ImAttachment />
                                     </span>
                                     <input
+                                        placeholder="Select .txt file"
                                         type="file"
                                         accept="*/txt"
                                         className="absolute opacity-0 w-8 !cursor-pointer"
@@ -176,7 +177,10 @@ export const Setup = () => {
                             </div>
 
                             {isLoading ? (
-                                <button className="w-44 border-[.1rem] border-black flex items-center justify-center gap-2 rounded-[5rem] border-solid p-2.5 cursor-pointer text-lg bg-dark-blue-color">
+                                <button
+                                    title="btn"
+                                    className="w-44 border-[.1rem] border-black flex items-center justify-center gap-2 rounded-[5rem] border-solid p-2.5 cursor-pointer text-lg bg-dark-blue-color"
+                                >
                                     <ClipLoader color="#fff" />
                                 </button>
                             ) : (
