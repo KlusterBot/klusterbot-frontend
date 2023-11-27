@@ -91,16 +91,14 @@ export const Playground = () => {
         <div>
             <h1>Playground</h1>
             <div className="flex items-center flex-col md:flex-row">
-                <div className="kluster-chatbot" onClick={() => {}}>
-                    <DeviceFrameset zoom={0.7} device="iPhone 8" color="black">
-                        <iframe
-                            title="chatbot"
-                            src={frameUrl}
-                            sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
-                            className="w-full h-full"
-                        ></iframe>
-                    </DeviceFrameset>
-                </div>
+                <DeviceFrameset zoom={0.9} device="iPhone 8" color="black">
+                    <iframe
+                        title="chatbot"
+                        src={frameUrl}
+                        sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+                        className="w-full h-full"
+                    ></iframe>
+                </DeviceFrameset>
 
                 <div>
                     <Input
