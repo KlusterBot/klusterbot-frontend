@@ -4,10 +4,12 @@ import "react-device-frameset/styles/marvel-devices.min.css";
 import { Input, Button } from "../../components/atoms";
 import { baseUrl, getError } from "../../lib/utils";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 export const Playground = () => {
     const user = JSON.parse((localStorage.getItem("user") as string) || "{}");
     const PLAYGROUND = import.meta.env.VITE_REACT_APP_PLAYGROUND_URL;
+    const AI = import.meta.env.VITE_REACT_APP_AI_URL;
 
     const frameUrl = `${PLAYGROUND}/?id=${user.id}`;
 
@@ -16,7 +18,6 @@ export const Playground = () => {
         company: "",
         website: "",
         document: "",
-        about: "",
     });
 
     const fetchData = async () => {
@@ -51,6 +52,7 @@ export const Playground = () => {
             toast.success(data.message);
 
             setLoading(false);
+            await axios.get(AI + "/clean");
         } catch (error) {
             toast.error(getError(error));
             setLoading(false);
@@ -106,7 +108,7 @@ export const Playground = () => {
                         className="w-[300px]"
                         isTextArea
                         placeholder="Company Info"
-                        value={form.about}
+                        defaultValue={form.document}
                         onChange={(e) => {
                             setForm({ ...form, document: e.target.value });
                         }}
