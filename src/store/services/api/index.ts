@@ -7,15 +7,15 @@ import {
 import { toast } from "react-hot-toast";
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_REACT_APP_BASE_URL,
-    prepareHeaders: (headers) => {
-        const token = getToken();
-        if (token) {
-            headers.set("Authorization", `Bearer ${token}`);
-        }
-        headers.set("accept", "application/json");
-        return headers;
-    },
+  baseUrl: import.meta.env.VITE_REACT_APP_BASE_URL,
+  prepareHeaders: (headers) => {
+    const token = getToken();
+    if (token) {
+      headers.set("Authorization", `Bearer ${token}`);
+    }
+    headers.set("accept", "application/json");
+    return headers;
+  },
 });
 
 const baseQueryWithReauth = async (
