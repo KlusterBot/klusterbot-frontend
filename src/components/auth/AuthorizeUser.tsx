@@ -10,7 +10,7 @@ const AuthorizeUser = () => {
       <Outlet />
     </DashboardLayout>
   ) : (
-    <Navigate replace to="/" />
+    <Navigate replace to="/login" />
   );
 };
 
