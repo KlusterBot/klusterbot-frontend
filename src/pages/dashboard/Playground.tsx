@@ -16,7 +16,6 @@ export const Playground = () => {
         company: "",
         website: "",
         document: "",
-        about: "",
     });
 
     const fetchData = async () => {
@@ -106,7 +105,7 @@ export const Playground = () => {
                         className="w-[300px]"
                         isTextArea
                         placeholder="Company Info"
-                        value={form.about}
+                        defaultValue={form.document}
                         onChange={(e) => {
                             setForm({ ...form, document: e.target.value });
                         }}
