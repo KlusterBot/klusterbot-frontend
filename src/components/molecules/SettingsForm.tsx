@@ -9,7 +9,7 @@ import { IoCheckmarkDone, IoCopyOutline } from "react-icons/io5";
 export const SettingsForm = () => {
     const token = getToken();
     const user = token && jwtDecode(token);
-    // @ts-ignore
+    // @ts-expect-error err
     const user_id = user?.["id"];
     const [isCopied, setIsCopied] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -29,7 +29,6 @@ export const SettingsForm = () => {
 
             if (data.success) {
                 setForm(data.data);
-                console.log(data);
             }
         } catch (error) {
             toast.error(getError(error));
@@ -41,8 +40,6 @@ export const SettingsForm = () => {
             setLoading(true);
             const response = await baseUrl.post("/me/update", form);
             const data = response?.data;
-
-            console.log(data);
 
             toast.success(data.message);
 

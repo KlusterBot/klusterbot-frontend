@@ -59,19 +59,19 @@ export const Playground = () => {
         }
     };
 
-    const startBot = async () => {
-        try {
-            setLoading(true);
+    // const startBot = async () => {
+    //     try {
+    //         setLoading(true);
 
-            const response = await baseUrl.post("/ai/start");
-            const data = response?.data;
-            toast.success(data.message);
-            setLoading(false);
-        } catch (error) {
-            toast.error(getError(error));
-            setLoading(false);
-        }
-    };
+    //         const response = await baseUrl.post("/ai/start");
+    //         const data = response?.data;
+    //         toast.success(data.message);
+    //         setLoading(false);
+    //     } catch (error) {
+    //         toast.error(getError(error));
+    //         setLoading(false);
+    //     }
+    // };
 
     const stopBot = async () => {
         try {
@@ -112,18 +112,11 @@ export const Playground = () => {
                         }}
                     />
                     <Button
-                        className="m-5 w-full"
+                        className="m-5 w-full bg-[green]"
                         onClick={updateBot}
                         disabled={loading}
                     >
-                        Update Bot
-                    </Button>
-                    <Button
-                        className="m-5 w-full bg-[green]"
-                        onClick={startBot}
-                        disabled={loading}
-                    >
-                        Start Bot
+                        Restart Bot
                     </Button>
                     <Button
                         className="m-5 w-full bg-[red]"

@@ -20,7 +20,7 @@ export const Setup = () => {
     };
     const navigate = useNavigate();
     const [step, setStep] = useState(1);
-    const [setupBot, { isLoading, isError }] = useSetupBotMutation();
+    const [setupBot, { isLoading }] = useSetupBotMutation();
     const [formDetails, setFormDetails] = useState(formDetailsInitState);
 
     const inputClass =
@@ -44,15 +44,11 @@ export const Setup = () => {
         event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) => {
         event.preventDefault();
-        console.log(isError);
         const input = event.target.name;
         const value = event.target.value;
-        console.log();
-        // @ts-ignore
         setFormDetails((prev) => ({ ...prev, [input]: value }));
     };
 
-    console.log(formDetails);
     const submitFormHandler = async (
         event: React.FormEvent<HTMLFormElement>
     ) => {
@@ -60,16 +56,15 @@ export const Setup = () => {
         if (!formDetails || isLoading) return;
         try {
             const data = await setupBot(formDetails).unwrap();
-            console.log(data);
             setFormDetails(formDetailsInitState);
             toast.success(data.message);
             goToNextStep();
-        } catch (error: any) {
+        } catch (error) {
             console.log(error);
         }
     };
     const user = token && jwtDecode(token);
-    // @ts-ignore
+    // @ts-expect-error err
     const user_id = user?.["id"];
 
     const copyToClipboard = () => {
@@ -79,8 +74,7 @@ export const Setup = () => {
     };
 
     const scanDocument = async (event: ChangeEvent<HTMLInputElement>) => {
-        console.log(event.target.type);
-        var texttype = /text.*/;
+        const texttype = /text.*/;
         const file = event?.target?.files?.[0];
         const reader = new FileReader();
         if (file) {
@@ -91,7 +85,7 @@ export const Setup = () => {
             reader.onloadend = async (res) => {
                 const data = res?.target?.result?.toString();
                 const string = data?.replace(/^\s*[\r\n]/gm, "");
-                let array = string?.split(new RegExp(/[\r\n]/gm));
+                const array = string?.split(new RegExp(/[\r\n]/gm));
                 const document = array?.join("\n");
                 if (document) setFormDetails((prev) => ({ ...prev, document }));
             };
@@ -162,6 +156,7 @@ export const Setup = () => {
                                     className={`${inputClass} min-h-[5rem] pr-9`}
                                 ></textarea>
                                 <button
+                                    title="btn"
                                     type="button"
                                     className="absolute right-[2.2rem] top-[2.29rem] cursor-none"
                                 >
@@ -169,6 +164,7 @@ export const Setup = () => {
                                         <ImAttachment />
                                     </span>
                                     <input
+                                        placeholder="Select .txt file"
                                         type="file"
                                         accept="*/txt"
                                         className="absolute opacity-0 w-8 !cursor-pointer"
@@ -181,7 +177,10 @@ export const Setup = () => {
                             </div>
 
                             {isLoading ? (
-                                <button className="w-44 border-[.1rem] border-black flex items-center justify-center gap-2 rounded-[5rem] border-solid p-2.5 cursor-pointer text-lg bg-dark-blue-color">
+                                <button
+                                    title="btn"
+                                    className="w-44 border-[.1rem] border-black flex items-center justify-center gap-2 rounded-[5rem] border-solid p-2.5 cursor-pointer text-lg bg-dark-blue-color"
+                                >
                                     <ClipLoader color="#fff" />
                                 </button>
                             ) : (
