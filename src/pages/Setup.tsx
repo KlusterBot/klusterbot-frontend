@@ -224,8 +224,7 @@ export const Setup = () => {
                                     id="code"
                                 >
                                     {`<script
-                    src="https://api.kluster-ai.online/api/me/embed/${user_id}/kluster.js
-                  ></script>`}
+                    src="https://api.kluster-ai.online/api/me/embed/${user_id}/kluster.js"></script>`}
                                 </code>
                             </div>
                             <button
