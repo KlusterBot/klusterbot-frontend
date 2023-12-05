@@ -26,7 +26,8 @@ export const Setup = () => {
 
   const inputClass =
     "border-solid rounded-lg border-[1px] border-dark-blue-color p-2 outline-none";
-  const inputContainerClass = "flex flex-col gap-2.5 text-gray-500 w-[60%]";
+  const inputContainerClass =
+    "flex flex-col gap-2.5 text-gray-500 w-[68%] max-sm:w-[90%]";
 
   const token = getToken();
 
@@ -146,7 +147,11 @@ export const Setup = () => {
                 />
               </div>
               <div className={`${inputContainerClass} relative`}>
-                <label htmlFor="about">About Company (Kluster AI will use this information to reply to your customers)</label>
+                <label htmlFor="about">About Company</label>
+                <p className="text-sm">
+                  (Kluster AI will use this information to reply to your
+                  customers)
+                </p>
                 <textarea
                   placeholder="Please provide as much information as possible about your business, you can also upload a text file"
                   required
@@ -159,9 +164,9 @@ export const Setup = () => {
                 ></textarea>
                 <button
                   type="button"
-                  className="absolute right-[2.2rem] top-[2.29rem] cursor-none"
+                  className="absolute right-[2.2rem]  max-[864px]:top-[5.3rem] min-[864px]:top-[4rem]  lg:top-[4rem] cursor-none"
                 >
-                  <span className="absolute p-2 scale-[1.1] bg-white rounded-lg">
+                  <span className="absolute p-2 scale-[1.1] rounded-lg">
                     <ImAttachment />
                   </span>
                   <input
@@ -246,4 +251,3 @@ export const Setup = () => {
     </div>
   );
 };
-
