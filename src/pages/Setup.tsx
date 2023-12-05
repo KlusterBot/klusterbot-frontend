@@ -146,12 +146,12 @@ export const Setup = () => {
                 />
               </div>
               <div className={`${inputContainerClass} relative`}>
-                <label htmlFor="about">About Company</label>
+                <label htmlFor="about">About Company (Kluster AI will use this information to reply to your customers)</label>
                 <textarea
-                  placeholder="Tell us about your company to enable us serve you better."
+                  placeholder="Please provide as much information as possible about your business, you can also upload a text file"
                   required
                   name="document"
-                  minLength={50}
+                  minLength={100}
                   rows={4}
                   value={formDetails?.document}
                   onChange={formInputHandler}
